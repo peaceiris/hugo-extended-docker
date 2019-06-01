@@ -8,13 +8,25 @@
 
 ## Docker image of Hugo extended version
 
-Docker image of Hugo extended version.
+- [peaceiris/hugo - Docker Hub]
+
+[![DockerHub Badge](https://dockeri.co/image/peaceiris/hugo)][peaceiris/hugo - Docker Hub]
+
+[peaceiris/hugo - Docker Hub]: https://hub.docker.com/r/peaceiris/hugo
+
+
+
+## Getting started
+
+### Pull docker image
 
 ```sh
 docker pull peaceiris/hugo:v0.55.6
+```
 
-docker build . -t peaceiris/hugo:v0.55.6
+### Usage
 
+```sh
 # Run "hugo server"
 docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:v0.55.6 server
 

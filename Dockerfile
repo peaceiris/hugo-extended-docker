@@ -1,35 +1,18 @@
-FROM alpine:3.9
+FROM debian:9-slim
 
-ENV GLIBC_VERSION="2.28-r0"
-RUN apk add --no-cache \
-    git \
-    libstdc++ \
-    ca-certificates \
-    wget && \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-    wget "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION/glibc-$GLIBC_VERSION.apk" && \
-    apk --no-cache add "glibc-$GLIBC_VERSION.apk" && \
-    rm "glibc-$GLIBC_VERSION.apk" && \
-    wget "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION/glibc-bin-$GLIBC_VERSION.apk" && \
-    apk --no-cache add "glibc-bin-$GLIBC_VERSION.apk" && \
-    rm "glibc-bin-$GLIBC_VERSION.apk" && \
-    wget "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION/glibc-i18n-$GLIBC_VERSION.apk" && \
-    apk --no-cache add "glibc-i18n-$GLIBC_VERSION.apk" && \
-    rm "glibc-i18n-$GLIBC_VERSION.apk" && \
-    apk del ca-certificates wget
+ENV HUGO_VERSION='0.55.6'
+ENV HUGO_NAME="hugo_extended_${HUGO_VERSION}_Linux-64bit"
+ENV HUGO_URL="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_NAME}.deb"
+ENV BUILD_DEPS="wget"
 
-ENV HUGO_VERSION=0.55.6
-ENV HUGO_TYPE=_extended
-
-ENV HUGO_ID=hugo${HUGO_TYPE}_${HUGO_VERSION}
-ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_ID}_Linux-64bit.tar.gz /tmp
-RUN tar -xf /tmp/${HUGO_ID}_Linux-64bit.tar.gz -C /tmp \
-    && mkdir -p /usr/local/sbin \
-    && mv /tmp/hugo /usr/local/sbin/hugo \
-    && rm -rf /tmp/${HUGO_ID}_linux_amd64 \
-    && rm -rf /tmp/${HUGO_ID}_Linux-64bit.tar.gz \
-    && rm -rf /tmp/LICENSE.md \
-    && rm -rf /tmp/README.md
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y git "${BUILD_DEPS}" && \
+    wget "${HUGO_URL}" && \
+    apt-get install "./${HUGO_NAME}.deb" && \
+    rm -rf "./${HUGO_NAME}.deb" "${HUGO_NAME}" && \
+    apt-get remove -y "${BUILD_DEPS}" && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
 COPY entrypoint.sh /entrypoint.sh

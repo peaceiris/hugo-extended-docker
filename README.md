@@ -28,15 +28,15 @@
 ### Pull docker image
 
 ```sh
-docker pull peaceiris/hugo:v0.55.6-2
+docker pull peaceiris/hugo:v0.55.6-3
 ```
 
 ### Usage
 
 ```sh
 # Run "hugo server"
-docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:v0.55.6-2 server
+docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:v0.55.6-3 server
 
 # Run "hugo --gc --minify --cleanDestinationDir"
-docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:v0.55.6-2 --gc --minify --cleanDestinationDir
+docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:v0.55.6-3 --gc --minify --cleanDestinationDir
 ```

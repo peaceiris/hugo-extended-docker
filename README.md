@@ -8,7 +8,7 @@
 
 
 
-## Docker image of Hugo extended version
+## Docker image of Hugo (Hugo extended and Hugo Modules)
 
 - [peaceiris/hugo - Docker Hub]
 

@@ -28,15 +28,20 @@
 ### Pull docker image
 
 ```sh
-docker pull peaceiris/hugo:v0.56.0
+# small image
+export HUGO_DOCKER_TAG="v0.56.0"
+# large image for Hugo Modules (Golang and Git are installed)
+export HUGO_DOCKER_TAG="${HUGO_DOCKER_TAG}-mod"
+
+docker pull peaceiris/hugo:${HUGO_DOCKER_TAG}
 ```
 
 ### Usage
 
 ```sh
 # Run "hugo server"
-docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:v0.56.0 server
+docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:${HUGO_DOCKER_TAG} server
 
-# Run "hugo --gc --minify --cleanDestinationDir"
-docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:v0.56.0 --gc --minify --cleanDestinationDir
+# Run with flags
+docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:${HUGO_DOCKER_TAG} --gc --minify --cleanDestinationDir
 ```

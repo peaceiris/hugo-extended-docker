@@ -1,6 +1,6 @@
 FROM debian:10-slim
 
-ENV HUGO_VERSION='0.56.1'
+ENV HUGO_VERSION='0.56.2'
 ENV HUGO_NAME="hugo_extended_${HUGO_VERSION}_Linux-64bit"
 ENV HUGO_URL="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_NAME}.tar.gz"
 ENV BUILD_DEPS="wget"

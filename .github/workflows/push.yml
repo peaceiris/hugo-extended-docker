@@ -1,13 +1,18 @@
 name: Push workflow
 
-on: [push]
+on:
+  push:
+    tags:
+    - invalid-tag
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Docker build
-      run: docker build -t peaceiris/hugo .
-    - name: Check Hugo version
-      run: docker run peaceiris/hugo:latest version
+    - name: Docker build and print Hugo version
+      if: github.event.deleted == false
+      run: |
+        docker build -t peaceiris/actions-hugo . &&
+        docker run peaceiris/actions-hugo:latest version ||
+        (echo -e "\e[31mfailed to build\e[m" && exit 1)

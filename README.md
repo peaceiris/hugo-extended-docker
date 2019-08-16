@@ -29,7 +29,7 @@
 
 ```sh
 # small image
-export HUGO_DOCKER_TAG="v0.57.0"
+export HUGO_DOCKER_TAG="v0.57.1"
 # large image for Hugo Modules (Golang and Git are installed)
 export HUGO_DOCKER_TAG="${HUGO_DOCKER_TAG}-mod"
 

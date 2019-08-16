@@ -1,4 +1,4 @@
-- [ ] upgrade: hugo to v0.
+- [ ] upgrade: hugo to ``
 - [ ] update: tag on readme
-- [ ] release: `v0..` with **master** branch
-<!-- - [x] release: `v0..` with **modules** branch -->
+- [ ] release: `` with **master** branch
+<!-- - [x] release: `` with **modules** branch -->

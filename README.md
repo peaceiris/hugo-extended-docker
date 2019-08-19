@@ -1,8 +1,8 @@
+<!-- https://shields.io/ -->
 [![license](https://img.shields.io/github/license/peaceiris/hugo-extended-docker.svg)](https://github.com/peaceiris/hugo-extended-docker/blob/master/LICENSE)
 [![release](https://img.shields.io/github/release/peaceiris/hugo-extended-docker.svg)](https://github.com/peaceiris/hugo-extended-docker/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/peaceiris/hugo-extended-docker.svg)](https://github.com/peaceiris/hugo-extended-docker/releases)
-
-<!-- https://shields.io/ -->
+[![GitHub Actions status](https://github.com/peaceiris/hugo-extended-docker/workflows/Push%20workflow/badge.svg)](https://github.com/peaceiris/hugo-extended-docker/actions)
 
 <img width="400" alt="Docker image of Hugo extended version" src="./images/ogp.svg">
 
@@ -29,7 +29,7 @@
 
 ```sh
 # small image
-export HUGO_DOCKER_TAG="v0.57.1"
+export HUGO_DOCKER_TAG="v0.57.2"
 # large image for Hugo Modules (Golang and Git are installed)
 export HUGO_DOCKER_TAG="${HUGO_DOCKER_TAG}-mod"
 

@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/github/license/peaceiris/hugo-extended-docker.svg)](https://github.com/peaceiris/hugo-extended-docker/blob/master/LICENSE)
 [![release](https://img.shields.io/github/release/peaceiris/hugo-extended-docker.svg)](https://github.com/peaceiris/hugo-extended-docker/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/peaceiris/hugo-extended-docker.svg)](https://github.com/peaceiris/hugo-extended-docker/releases)
-[![GitHub Actions status](https://github.com/peaceiris/hugo-extended-docker/workflows/Push%20workflow/badge.svg)](https://github.com/peaceiris/hugo-extended-docker/actions)
+[![GitHub Actions status](https://github.com/peaceiris/hugo-extended-docker/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/peaceiris/hugo-extended-docker/actions)
 
 <img width="400" alt="Docker image of Hugo extended version" src="./images/ogp.svg">
 

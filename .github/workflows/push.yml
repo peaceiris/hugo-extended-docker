@@ -2,16 +2,16 @@ name: Docker Image CI
 
 on:
   push:
-    tags:
-    - invalid-tag
+    branches:
+    - master
 
 jobs:
   test:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@master
+
     - name: Docker build and print Hugo version
-      if: github.event.deleted == false
       env:
         DOCKER_IMAGE: ${{ github.repository }}:${{ github.sha }}
       run: |

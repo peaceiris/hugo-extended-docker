@@ -1,6 +1,8 @@
 name: Docker Image CI
 
 on:
+  pull_request:
+    types: [opened, synchronize]
   push:
     branches:
     - master
@@ -9,13 +11,28 @@ on:
 jobs:
   test:
     runs-on: ubuntu-18.04
-    steps:
-    - uses: actions/checkout@master
+    env:
+      DOCKER_IMAGE: ${{ github.repository }}:${{ github.sha }}
 
-    - name: Docker build and print Hugo version
-      env:
-        DOCKER_IMAGE: ${{ github.repository }}:${{ github.sha }}
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Docker build
+      run: docker build . --file Dockerfile --tag ${DOCKER_IMAGE}
+
+    - name: Print Hugo version
+      run: docker run --rm ${DOCKER_IMAGE} version
+
+
+  hadolint:
+    runs-on: macOS-10.14
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+    - name: hadolint
       run: |
-        docker build . --file Dockerfile --tag ${DOCKER_IMAGE} &&
-        docker run ${DOCKER_IMAGE} version ||
-        (echo -e "\e[31m[${GITHUB_WORKFLOW}] failed to build\e[m" && exit 1)
+        brew install hadolint
+        hadolint ./Dockerfile

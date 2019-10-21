@@ -25,23 +25,39 @@
 
 ## Getting started
 
-### Pull docker image
+### (1) Docker Compose
 
-```sh
-# small image
-export HUGO_DOCKER_TAG="v0.58.3"
-# large image for Hugo Modules (Golang and Git are installed)
-export HUGO_DOCKER_TAG="${HUGO_DOCKER_TAG}-mod"
+Create your `docker-compose.yml` like the following.
 
-docker pull peaceiris/hugo:${HUGO_DOCKER_TAG}
+```yaml
+version: '3'
+
+services:
+  hugo:
+    container_name: hugo
+    image: peaceiris/hugo:v0.59.0
+    # image: peaceiris/hugo:v0.59.0-mod  # Hugo Modules
+    ports:
+      - 1313:1313
+    volumes:
+      - ${PWD}:/src
+    command:
+      - server
+      - --bind=0.0.0.0
+      - --buildDrafts
 ```
 
-### Usage
+### (2) Usage
 
 ```sh
 # Run "hugo server"
-docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:${HUGO_DOCKER_TAG} server
+docker-compose up
 
-# Run with flags
-docker run --rm -i -t -v $(pwd):/src -p 1313:1313 peaceiris/hugo:${HUGO_DOCKER_TAG} --gc --minify --cleanDestinationDir
+# Build site
+docker-compose run --rm hugo ""
+# Build site with flags
+docker-compose run --rm hugo --gc --minify --cleanDestinationDir
+
+# Run a command of Hugo
+docker-compose run --rm hugo env
 ```

@@ -1,6 +1,2 @@
-.git
-.github
-.gitignore
-LICENSE
-README.md
-images
+.*
+*

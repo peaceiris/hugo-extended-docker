@@ -25,10 +25,10 @@ jobs:
 
     - name: Set env
       run: |
-        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}/latest:latest"
-        echo "::set-env name=PKG_LATEST_MOD::${DOCKER_BASE_NAME}/latest-mod:latest"
-        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}/${{ github.event.release.tag_name }}:latest"
-        echo "::set-env name=PKG_TAG_MOD::${DOCKER_BASE_NAME}/${{ github.event.release.tag_name }}-mod:latest"
+        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}/hugo:latest"
+        echo "::set-env name=PKG_LATEST_MOD::${DOCKER_BASE_NAME}/hugo-mod:latest"
+        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}/hugo-${{ github.event.release.tag_name }}:latest"
+        echo "::set-env name=PKG_TAG_MOD::${DOCKER_BASE_NAME}/hugo-${{ github.event.release.tag_name }}-mod:latest"
         echo "::set-env name=HUB_LATEST::${DOCKER_HUB_BASE_NAME}:latest"
         echo "::set-env name=HUB_LATEST_MOD::${DOCKER_HUB_BASE_NAME}:latest-mod"
         echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${{ github.event.release.tag_name }}"

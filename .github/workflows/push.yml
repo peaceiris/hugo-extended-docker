@@ -11,35 +11,55 @@ on:
     paths-ignore:
     - '**.md'
 
-jobs:
-  test:
-    runs-on: ubuntu-18.04
-    env:
-      DOCKER_IMAGE: ${{ github.repository }}
+env:
+  DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/hugo
+  DOCKER_HUB_BASE_NAME: peaceiris/hugo
 
+jobs:
+  push-latest:
+    runs-on: ubuntu-18.04
     steps:
+
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
 
     - name: Set env
       run: |
-        echo "::set-env name=LATEST::${DOCKER_IMAGE}:latest"
-        echo "::set-env name=LATEST_MOD::${DOCKER_IMAGE}:latest-mod"
+        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}:latest"
+        echo "::set-env name=PKG_LATEST_MOD::${DOCKER_BASE_NAME}-mod:latest"
+        echo "::set-env name=HUB_LATEST::${DOCKER_HUB_BASE_NAME}:latest"
+        echo "::set-env name=HUB_LATEST_MOD::${DOCKER_HUB_BASE_NAME}:latest-mod"
 
     - name: Build alpine image
       run: |
-        docker build . -t "${LATEST}"
+        docker build . -t "${PKG_LATEST}"
+        docker tag "${PKG_LATEST}" "${HUB_LATEST}"
 
     - name: Build golang image
       run: |
-        docker build . -t "${LATEST_MOD}" --build-arg BASE_IMAGE=golang:1.13-alpine3.10
+        docker build . -t "${PKG_LATEST_MOD}" --build-arg BASE_IMAGE=golang:1.13-alpine3.10
+        docker tag "${PKG_LATEST_MOD}" "${HUB_LATEST_MOD}"
 
     - name: Print Hugo version
       run: |
-        docker run --rm ${LATEST} version
-        docker run --rm ${LATEST_MOD} version
+        docker run --rm ${PKG_LATEST} version
+        docker run --rm ${PKG_LATEST_MOD} version
 
+    - name: Login to Registries
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+      run: |
+        echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
+        echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
+
+    - name: Push latest
+      run: |
+        docker push "${PKG_LATEST}"
+        docker push "${PKG_LATEST_MOD}"
+        docker push "${HUB_LATEST}"
+        docker push "${HUB_LATEST_MOD}"
 
   hadolint:
     runs-on: macos-latest

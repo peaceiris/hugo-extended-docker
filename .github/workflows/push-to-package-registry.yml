@@ -7,6 +7,7 @@ on:
 env:
   DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/hugo
   DOCKER_HUB_BASE_NAME: peaceiris/hugo
+  TAG_NAME: ${{ github.event.release.tag_name }}
 
 jobs:
 
@@ -25,28 +26,20 @@ jobs:
 
     - name: Set env
       run: |
-        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}:latest"
-        echo "::set-env name=PKG_LATEST_MOD::${DOCKER_BASE_NAME}-mod:latest"
-        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${{ github.event.release.tag_name }}"
-        echo "::set-env name=PKG_TAG_MOD::${DOCKER_BASE_NAME}-mod:${{ github.event.release.tag_name }}"
-        echo "::set-env name=HUB_LATEST::${DOCKER_HUB_BASE_NAME}:latest"
-        echo "::set-env name=HUB_LATEST_MOD::${DOCKER_HUB_BASE_NAME}:latest-mod"
-        echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${{ github.event.release.tag_name }}"
-        echo "::set-env name=HUB_TAG_MOD::${DOCKER_HUB_BASE_NAME}:${{ github.event.release.tag_name }}-mod"
+        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${TAG_NAME}"
+        echo "::set-env name=PKG_TAG_MOD::${DOCKER_BASE_NAME}-mod:${TAG_NAME}"
+        echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${TAG_NAME}"
+        echo "::set-env name=HUB_TAG_MOD::${DOCKER_HUB_BASE_NAME}:${TAG_NAME}-mod"
 
     - name: Build alpine image
       run: |
-        docker build . -t "${PKG_LATEST}"
-        docker tag "${PKG_LATEST}" "${PKG_TAG}"
-        docker tag "${PKG_LATEST}" "${HUB_LATEST}"
-        docker tag "${PKG_LATEST}" "${HUB_TAG}"
+        docker build . -t "${PKG_TAG}"
+        docker tag "${PKG_TAG}" "${HUB_TAG}"
 
     - name: Build golang image
       run: |
-        docker build . -t "${PKG_LATEST_MOD}" --build-arg BASE_IMAGE=golang:1.13-alpine3.10
-        docker tag "${PKG_LATEST_MOD}" "${PKG_TAG_MOD}"
-        docker tag "${PKG_LATEST_MOD}" "${HUB_LATEST_MOD}"
-        docker tag "${PKG_LATEST_MOD}" "${HUB_TAG_MOD}"
+        docker build . -t "${PKG_TAG_MOD}" --build-arg BASE_IMAGE=golang:1.13-alpine3.10
+        docker tag "${PKG_TAG_MOD}" "${HUB_TAG_MOD}"
 
     - name: Login to Registries
       env:
@@ -55,14 +48,6 @@ jobs:
       run: |
         echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
         echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
-
-    - name: Push latest
-      if: github.event.release.prerelease	== false
-      run: |
-        docker push "${PKG_LATEST}"
-        docker push "${PKG_LATEST_MOD}"
-        docker push "${HUB_LATEST}"
-        docker push "${HUB_LATEST_MOD}"
 
     - name: Push tag
       run: |

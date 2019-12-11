@@ -16,8 +16,18 @@ env:
   DOCKER_HUB_BASE_NAME: peaceiris/hugo
 
 jobs:
+  hadolint:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+    - run: brew install hadolint
+    - run: hadolint ./Dockerfile
+
   push-latest:
     runs-on: ubuntu-18.04
+    needs: hadolint
     steps:
 
     - uses: actions/checkout@v1
@@ -60,12 +70,3 @@ jobs:
         docker push "${PKG_LATEST_MOD}"
         docker push "${HUB_LATEST}"
         docker push "${HUB_LATEST_MOD}"
-
-  hadolint:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
-    - run: brew install hadolint
-    - run: hadolint ./Dockerfile

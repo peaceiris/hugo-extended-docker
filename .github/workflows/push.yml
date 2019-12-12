@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image Push
 
 on:
   pull_request:
@@ -10,6 +10,8 @@ on:
     - master
     paths-ignore:
     - '**.md'
+  release:
+    types: [published]
 
 env:
   DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/hugo
@@ -25,38 +27,51 @@ jobs:
     - run: brew install hadolint
     - run: hadolint ./Dockerfile
 
-  push-latest:
+  push:
     runs-on: ubuntu-18.04
     needs: hadolint
+    strategy:
+      matrix:
+        baseimage: ['alpine:3.10', 'golang:1.13-alpine3.10']
     steps:
 
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
 
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "${GITHUB_CONTEXT}"
+
     - name: Set env
       run: |
-        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}:latest"
-        echo "::set-env name=PKG_LATEST_MOD::${DOCKER_BASE_NAME}-mod:latest"
-        echo "::set-env name=HUB_LATEST::${DOCKER_HUB_BASE_NAME}:latest"
-        echo "::set-env name=HUB_LATEST_MOD::${DOCKER_HUB_BASE_NAME}:latest-mod"
+        if [ "${{ github.event_name }}" = 'release' ]; then
+            export TAG_NAME="${{ github.event.release.tag_name }}"
+        else
+            export TAG_NAME="latest"
+        fi
+        if [ "${{ startsWith( matrix.baseimage, 'golang') }}" = "true" ]; then
+            export TAG_NAME="${TAG_NAME}-mod"
+        fi
+        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${TAG_NAME}"
+        echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${TAG_NAME}"
 
-    - name: Build alpine image
+    - name: Build ${{ matrix.baseimage }} base image
       run: |
-        docker build . -t "${PKG_LATEST}"
-        docker tag "${PKG_LATEST}" "${HUB_LATEST}"
+        docker build . -t "${PKG_TAG}" --build-arg BASE_IMAGE="${{ matrix.baseimage }}"
+        docker tag "${PKG_TAG}" "${HUB_TAG}"
 
-    - name: Build golang image
-      run: |
-        docker build . -t "${PKG_LATEST_MOD}" --build-arg BASE_IMAGE=golang:1.13-alpine3.10
-        docker tag "${PKG_LATEST_MOD}" "${HUB_LATEST_MOD}"
+    - run: docker images
+    - run: docker run --rm ${PKG_TAG} version
 
-    - name: Print Hugo version
+    - name: Scan image
       run: |
-        docker run --rm ${PKG_LATEST} version
-        docker run --rm ${PKG_LATEST_MOD} version
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 ${PKG_TAG}
 
     - name: Login to Registries
+      if: github.event_name != 'pull_request'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
@@ -64,9 +79,10 @@ jobs:
         echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
         echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
-    - name: Push latest
-      run: |
-        docker push "${PKG_LATEST}"
-        docker push "${PKG_LATEST_MOD}"
-        docker push "${HUB_LATEST}"
-        docker push "${HUB_LATEST_MOD}"
+    - name: Push to GitHub Packages
+      if: github.event_name != 'pull_request'
+      run: docker push "${PKG_TAG}"
+
+    - name: Push to Docker Hub
+      if: github.event_name != 'pull_request'
+      run: docker push "${HUB_TAG}"

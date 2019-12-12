@@ -1,7 +1,8 @@
-ARG BASE_IMAGE=alpine:3.10
+ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
-ENV HUGO_VERSION='0.60.1'
+ARG HUGO_VERSION
+ENV HUGO_VERSION ${HUGO_VERSION:-0.61.0}
 ENV HUGO_NAME="hugo_extended_${HUGO_VERSION}_Linux-64bit"
 ENV HUGO_BASE_URL="https://github.com/gohugoio/hugo/releases/download"
 ENV HUGO_URL="${HUGO_BASE_URL}/v${HUGO_VERSION}/${HUGO_NAME}.tar.gz"

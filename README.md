@@ -25,6 +25,11 @@
 
 ## Getting started
 
+| Image tag | Base Image | Image size | Notes |
+|---|---|---|---|
+| `peaceiris/hugo:v0.61.x` | `alpine:3.10` | 66.1 MB | Small image |
+| `peaceiris/hugo:v0.61.x-mod` | `golang:1.13-alpine3.10` | 419 MB | Hugo Modules feature is available |
+
 ### (1) Docker Compose
 
 Create your `docker-compose.yml` like the following.
@@ -35,8 +40,8 @@ version: '3'
 services:
   hugo:
     container_name: hugo
-    image: peaceiris/hugo:v0.60.1
-    # image: peaceiris/hugo:v0.60.1-mod  # Hugo Modules
+    image: peaceiris/hugo:v0.61.0
+    # image: peaceiris/hugo:v0.61.0-mod  # Hugo Modules
     ports:
       - 1313:1313
     volumes:
@@ -61,3 +66,17 @@ docker-compose run --rm hugo --gc --minify --cleanDestinationDir
 # Run a command of Hugo
 docker-compose run --rm hugo env
 ```
+
+
+
+## License
+
+- [MIT License - peaceiris/hugo-extended-docker]
+
+[MIT License - peaceiris/hugo-extended-docker]: https://github.com/peaceiris/hugo-extended-docker/blob/master/LICENSE
+
+
+
+## About the author
+
+- [peaceiris homepage](https://peaceiris.com/)

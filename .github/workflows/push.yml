@@ -68,7 +68,7 @@ jobs:
     - name: Scan image
       run: |
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 ${PKG_TAG}
+          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 ${HUB_TAG}
 
     - name: Login to Registries
       if: github.event_name != 'pull_request'

@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        baseimage: ['alpine:3.10', 'golang:1.13-alpine3.10']
+        baseimage: ['alpine:3.11', 'golang:1.13-alpine3.11']
         version: ['0.61.0', '0.60.1', '0.59.1', '0.58.3', '0.57.2', '0.56.3']
     steps:
 

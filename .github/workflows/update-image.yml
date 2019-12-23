@@ -21,9 +21,7 @@ jobs:
         version: ['0.61.0', '0.60.1', '0.59.1', '0.58.3', '0.57.2', '0.56.3']
     steps:
 
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v2
 
     - name: Set env
       run: |

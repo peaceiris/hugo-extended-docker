@@ -21,9 +21,7 @@ jobs:
   hadolint:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v2
     - run: brew install hadolint
     - run: hadolint ./Dockerfile
 
@@ -35,9 +33,7 @@ jobs:
         baseimage: ['alpine:3.10', 'golang:1.13-alpine3.10']
     steps:
 
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v2
 
     - name: Dump GitHub context
       env:

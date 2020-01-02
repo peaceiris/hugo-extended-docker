@@ -30,7 +30,7 @@ jobs:
     needs: hadolint
     strategy:
       matrix:
-        baseimage: ['alpine:3.10', 'golang:1.13-alpine3.10']
+        baseimage: ['alpine:3.11', 'golang:1.13-alpine3.11']
     steps:
 
     - uses: actions/checkout@v2

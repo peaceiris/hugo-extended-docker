@@ -41,7 +41,7 @@ services:
   hugo:
     container_name: hugo
     image: peaceiris/hugo:v0.62.1
-    # image: peaceiris/hugo:v0.61.0-mod  # Hugo Modules
+    # image: peaceiris/hugo:v0.62.1-mod  # Hugo Modules
     ports:
       - 1313:1313
     volumes:

@@ -27,8 +27,8 @@
 
 | Image tag | Base Image | Image size | Notes |
 |---|---|---|---|
-| `peaceiris/hugo:v0.62.x` | `alpine:3.11` | 66.1 MB | Small image |
-| `peaceiris/hugo:v0.62.x-mod` | `golang:1.13-alpine3.11` | 419 MB | Hugo Modules feature is available |
+| `peaceiris/hugo:v0.x.x` | `alpine:3.11` | 66.1 MB | Small image |
+| `peaceiris/hugo:v0.x.x-mod` | `golang:1.13-alpine3.11` | 419 MB | Hugo Modules feature is available |
 
 ### (1) Docker Compose
 
@@ -40,8 +40,8 @@ version: '3'
 services:
   hugo:
     container_name: hugo
-    image: peaceiris/hugo:v0.62.2
-    # image: peaceiris/hugo:v0.62.2-mod  # Hugo Modules
+    image: peaceiris/hugo:v0.x.x
+    # image: peaceiris/hugo:v0.x.x-mod  # Hugo Modules
     ports:
       - 1313:1313
     volumes:

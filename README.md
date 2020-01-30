@@ -77,6 +77,6 @@ docker-compose run --rm hugo env
 
 
 
-## About the author
+## Maintainer
 
 - [peaceiris homepage](https://peaceiris.com/)

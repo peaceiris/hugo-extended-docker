@@ -5,53 +5,62 @@ on:
   #   branches:
   #     - master
   schedule:
-    - cron: '13 13 */8 * *'
+    - cron: "13 13 */8 * *"
 
 env:
   DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/hugo
   DOCKER_HUB_BASE_NAME: peaceiris/hugo
 
 jobs:
-
   update:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        baseimage: ['alpine:3.11', 'golang:1.13-alpine3.11']
-        version: ['0.64.1', '0.63.2', '0.62.2', '0.61.0', '0.60.1', '0.59.1', '0.58.3', '0.57.2']
+        baseimage:
+          - "alpine:3.11"
+          - "golang:1.13-alpine3.11"
+        version:
+          - "0.65.0"
+          - "0.64.1"
+          - "0.63.2"
+          - "0.62.2"
+          - "0.61.0"
+          - "0.60.1"
+          - "0.59.1"
+          - "0.58.3"
+          - "0.57.2"
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
+      - name: Set env
+        run: |
+          export TAG_NAME="v${{ matrix.version }}"
+          if [ "${{ startsWith( matrix.baseimage, 'golang') }}" = "true" ]; then
+              export TAG_NAME="${TAG_NAME}-mod"
+          fi
+          echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${TAG_NAME}"
+          echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${TAG_NAME}"
 
-    - name: Set env
-      run: |
-        export TAG_NAME="v${{ matrix.version }}"
-        if [ "${{ startsWith( matrix.baseimage, 'golang') }}" = "true" ]; then
-            export TAG_NAME="${TAG_NAME}-mod"
-        fi
-        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${TAG_NAME}"
-        echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${TAG_NAME}"
+      - name: Build ${{ matrix.baseimage }} base image
+        run: |
+          docker build . -t "${PKG_TAG}" \
+              --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
+              --build-arg HUGO_VERSION="${{ matrix.version }}"
+          docker tag "${PKG_TAG}" "${HUB_TAG}"
 
-    - name: Build ${{ matrix.baseimage }} base image
-      run: |
-        docker build . -t "${PKG_TAG}" \
-            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
-            --build-arg HUGO_VERSION="${{ matrix.version }}"
-        docker tag "${PKG_TAG}" "${HUB_TAG}"
+      - run: docker run --rm ${PKG_TAG} version
+      - run: docker images
 
-    - run: docker run --rm ${PKG_TAG} version
-    - run: docker images
+      - name: Login to Registries
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: |
+          echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
+          echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
-    - name: Login to Registries
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-      run: |
-        echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
-        echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
+      - name: Push to GitHub Packages
+        run: docker push "${PKG_TAG}"
 
-    - name: Push to GitHub Packages
-      run: docker push "${PKG_TAG}"
-
-    - name: Push to Docker Hub
-      run: docker push "${HUB_TAG}"
+      - name: Push to Docker Hub
+        run: docker push "${HUB_TAG}"

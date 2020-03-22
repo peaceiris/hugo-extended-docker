@@ -30,6 +30,8 @@
 | `peaceiris/hugo:v0.x.x` | `alpine:3.11` | 66.1 MB | Small image |
 | `peaceiris/hugo:v0.x.x-mod` | `golang:1.13-alpine3.11` | 419 MB | Hugo Modules feature is available |
 
+The image size is a result of the `docker images` command.
+
 ### (1) Docker Compose
 
 Create your `docker-compose.yml` like the following.

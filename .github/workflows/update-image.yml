@@ -1,9 +1,9 @@
 name: Update Docker Image
 
 on:
-  # push:
-  #   branches:
-  #     - master
+  push:
+    branches:
+      - master
   schedule:
     - cron: "13 13 */8 * *"
 
@@ -18,7 +18,7 @@ jobs:
       matrix:
         baseimage:
           - "alpine:3.11"
-          - "golang:1.13-alpine3.11"
+          - "golang:1.14-alpine3.11"
         version:
           - "0.69.0"
           - "0.68.3"

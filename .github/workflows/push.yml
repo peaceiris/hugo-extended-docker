@@ -32,7 +32,7 @@ jobs:
       matrix:
         baseimage:
           - "alpine:3.11"
-          - "golang:1.13-alpine3.11"
+          - "golang:1.14-alpine3.11"
     steps:
       - uses: actions/checkout@v2
 
@@ -61,11 +61,6 @@ jobs:
 
       - run: docker images
       - run: docker run --rm ${PKG_TAG} version
-
-      # - name: Scan image
-      #   run: |
-      #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-      #       -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 ${HUB_TAG}
 
       - name: Login to Registries
         if: github.event_name != 'pull_request'

@@ -1,9 +1,9 @@
 name: Update Docker Image
 
 on:
-#   push:
-#     branches:
-#       - master
+  push:
+    branches:
+      - update-image
   schedule:
     - cron: "13 13 */8 * *"
 

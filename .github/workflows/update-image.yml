@@ -15,6 +15,7 @@ jobs:
   update:
     runs-on: ubuntu-18.04
     strategy:
+      max-parallel: 1
       matrix:
         baseimage:
           - "alpine:3.11"

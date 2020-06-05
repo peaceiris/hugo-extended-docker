@@ -31,8 +31,8 @@ jobs:
     strategy:
       matrix:
         baseimage:
-          - "alpine:3.11"
-          - "golang:1.14-alpine3.11"
+          - "alpine:3.12"
+          - "golang:1.14-alpine3.12"
     steps:
       - uses: actions/checkout@v2
 

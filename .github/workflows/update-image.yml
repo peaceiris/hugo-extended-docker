@@ -1,9 +1,7 @@
 name: Update Docker Image
 
 on:
-  push:
-    branches:
-      - update-image
+  workflow_dispatch:
   schedule:
     - cron: "13 13 */8 * *"
 

@@ -2,12 +2,11 @@ name: Docker Image Push
 
 on:
   pull_request:
-    types: [opened, synchronize]
     paths-ignore:
       - "**.md"
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - "**.md"
   release:
@@ -19,10 +18,11 @@ env:
 
 jobs:
   hadolint:
-    runs-on: macos-latest
+    runs-on: ubuntu-18.04
+    container:
+      image: 'hadolint/hadolint:v1.18.0-alpine'
     steps:
       - uses: actions/checkout@v2
-      - run: brew install hadolint
       - run: hadolint ./Dockerfile
 
   push:

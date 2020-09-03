@@ -27,8 +27,8 @@
 
 | Image tag | Base Image | Image size | Notes |
 |---|---|---|---|
-| `peaceiris/hugo:v0.x.x` | `alpine:3.12` | 69.2 MB | Small image |
-| `peaceiris/hugo:v0.x.x-mod` | `golang:1.14-alpine3.12` | 423 MB | Hugo Modules feature is available |
+| `peaceiris/hugo:v0.x.x` | `alpine:3.12` | 75.5MB | Small image |
+| `peaceiris/hugo:v0.x.x-mod` | `golang:1.14-alpine3.12` | 356MB | Hugo Modules feature is available |
 
 The image size is a result of the `docker images` command.
 

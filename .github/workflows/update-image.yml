@@ -26,7 +26,7 @@ jobs:
         exclude:
           - baseimage: "alpine:3.12"
             node: true
-      steps:
+    steps:
       - uses: actions/checkout@v2
 
       - name: Set env

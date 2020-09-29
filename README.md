@@ -33,6 +33,9 @@
 
 The image size is a result of the `docker images` command.
 
+- Hugo Modules: `hugo mod`
+- Hugo Modules and Node.js: `hugo mod` and `hugo mod npm`
+
 ### (1) Docker Compose
 
 Create your `docker-compose.yml` like the following.

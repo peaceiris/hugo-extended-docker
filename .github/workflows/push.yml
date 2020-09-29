@@ -32,7 +32,11 @@ jobs:
       matrix:
         baseimage:
           - "alpine:3.12"
-          - "golang:1.14-alpine3.12"
+          - "golang:1.15-alpine3.12"
+        node: [false, true]
+        exclude:
+          - baseimage: "alpine:3.12"
+            node: true
     steps:
       - uses: actions/checkout@v2
 
@@ -44,19 +48,25 @@ jobs:
       - name: Set env
         run: |
           if [ "${{ github.event_name }}" = 'release' ]; then
-              export TAG_NAME="${{ github.event.release.tag_name }}"
+            export TAG_NAME="${{ github.event.release.tag_name }}"
           else
-              export TAG_NAME="latest"
+            export TAG_NAME="latest"
           fi
           if [ "${{ startsWith( matrix.baseimage, 'golang') }}" = "true" ]; then
+            if [ "${{ matrix.node }}" = "true" ]; then
+              export TAG_NAME="${TAG_NAME}-full"
+            else
               export TAG_NAME="${TAG_NAME}-mod"
+            fi
           fi
           echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${TAG_NAME}"
           echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${TAG_NAME}"
 
       - name: Build ${{ matrix.baseimage }} base image
         run: |
-          docker build . -t "${PKG_TAG}" --build-arg BASE_IMAGE="${{ matrix.baseimage }}"
+          docker build . -t "${PKG_TAG}" \
+            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
+            --build-arg INSTALL_NODE="${{ matrix.node }}"
           docker tag "${PKG_TAG}" "${HUB_TAG}"
 
       - run: docker images

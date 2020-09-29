@@ -24,7 +24,7 @@ RUN apk add --no-cache --virtual .build-deps wget && \
     mv ./hugo /usr/bin/hugo && \
     hugo version && \
     apk del .build-deps && \
-    if [ "${INSTALL_NODE}" ]; then \
+    if [ "${INSTALL_NODE}" = "true" ]; then \
         echo "Installing Node.js and npm..." && \
         apk add --no-cache nodejs npm && \
         npm i -g npm && \

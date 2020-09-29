@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "13 13 */8 * *"
+  pull_request:
+    paths-ignore:
+      - "**.md"
 
 env:
   DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/hugo
@@ -16,21 +19,25 @@ jobs:
       matrix:
         baseimage:
           - "alpine:3.12"
-          - "golang:1.14-alpine3.12"
+          - "golang:1.15-alpine3.12"
+        node: [false, true]
         version:
-          - "0.75.1"  # go 1.15
-          - "0.74.3"
-          - "0.73.0"
-          - "0.72.0"
-          - "0.71.1"
-    steps:
+          - "0.75.1"
+        exclude:
+          - baseimage: "alpine:3.12"
+            node: true
+      steps:
       - uses: actions/checkout@v2
 
       - name: Set env
         run: |
           export TAG_NAME="v${{ matrix.version }}"
           if [ "${{ startsWith( matrix.baseimage, 'golang') }}" = "true" ]; then
+            if [ "${{ matrix.node }}" = "true" ]; then
+              export TAG_NAME="${TAG_NAME}-full"
+            else
               export TAG_NAME="${TAG_NAME}-mod"
+            fi
           fi
           echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${TAG_NAME}"
           echo "::set-env name=HUB_TAG::${DOCKER_HUB_BASE_NAME}:${TAG_NAME}"
@@ -38,14 +45,16 @@ jobs:
       - name: Build ${{ matrix.baseimage }} base image
         run: |
           docker build . -t "${PKG_TAG}" \
-              --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
-              --build-arg HUGO_VERSION="${{ matrix.version }}"
+            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
+            --build-arg HUGO_VERSION="${{ matrix.version }}" \
+            --build-arg INSTALL_NODE="${{ matrix.node }}"
           docker tag "${PKG_TAG}" "${HUB_TAG}"
 
       - run: docker run --rm ${PKG_TAG} version
       - run: docker images
 
       - name: Login to Registries
+        if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
@@ -54,7 +63,9 @@ jobs:
           echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
       - name: Push to GitHub Packages
+        if: github.event_name != 'pull_request'
         run: docker push "${PKG_TAG}"
 
       - name: Push to Docker Hub
+        if: github.event_name != 'pull_request'
         run: docker push "${HUB_TAG}"

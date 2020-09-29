@@ -14,6 +14,7 @@ RUN apk add --no-cache --virtual .build-deps wget && \
     apk add --no-cache \
     git \
     bash \
+    make \
     ca-certificates \
     libc6-compat \
     libstdc++ && \

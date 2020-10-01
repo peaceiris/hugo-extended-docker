@@ -9,7 +9,7 @@ on:
       - "**.md"
 
 env:
-  DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/hugo
+  DOCKER_BASE_NAME: ghcr.io/peaceiris/hugo
   DOCKER_HUB_BASE_NAME: peaceiris/hugo
 
 jobs:
@@ -56,10 +56,10 @@ jobs:
       - name: Login to Registries
         if: github.event_name != 'pull_request'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
-          echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
+          echo "${GH_PAT}" | docker login ghcr.io -u peaceiris --password-stdin
           echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
       - name: Push to GitHub Packages

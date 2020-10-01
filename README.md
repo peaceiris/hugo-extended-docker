@@ -4,7 +4,7 @@
 [![GitHub release date](https://img.shields.io/github/release-date/peaceiris/hugo-extended-docker.svg)](https://github.com/peaceiris/hugo-extended-docker/releases)
 ![Docker Image Push](https://github.com/peaceiris/hugo-extended-docker/workflows/Docker%20Image%20Push/badge.svg?branch=main&event=push)
 
-<img width="400" alt="Docker image of Hugo extended version" src="./images/ogp.svg">
+<img width="400" alt="Docker image of Hugo extended version" src="https://raw.githubusercontent.com/peaceiris/hugo-extended-docker/main/images/ogp.svg">
 
 
 

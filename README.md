@@ -36,6 +36,10 @@ The image size is a result of the `docker images` command.
 - Hugo Modules: `hugo mod`
 - Hugo Modules and Node.js: `hugo mod` and `hugo mod npm`
 
+[ghcr.io/peaceiris/hugo] is also available.
+
+[ghcr.io/peaceiris/hugo]: https://github.com/users/peaceiris/packages/container/package/hugo
+
 ### (1) Docker Compose
 
 Create your `docker-compose.yml` like the following.

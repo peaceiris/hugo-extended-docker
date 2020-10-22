@@ -34,7 +34,7 @@
 The image size is a result of the `docker images` command.
 
 - Hugo Modules: `hugo mod`
-- Hugo Modules and Node.js: `hugo mod` and `hugo mod npm`
+- Hugo Modules and Node.js: `hugo mod`, `node` and `npm`
 
 [ghcr.io/peaceiris/hugo] is also available.
 
@@ -77,6 +77,14 @@ docker-compose run --rm hugo --gc --minify --cleanDestinationDir
 # Run a command of Hugo
 docker-compose run --rm hugo env
 ```
+
+
+
+## GitHub Actions for Hugo
+
+The Hugo Setup GitHub Action is recommended.
+
+- [peaceiris/actions-hugo: GitHub Actions for Hugo ⚡️ Setup Hugo quickly and build your site fast. Hugo extended, Hugo Modules, Linux (Ubuntu), macOS, and Windows are supported.](https://github.com/peaceiris/actions-hugo)
 
 
 

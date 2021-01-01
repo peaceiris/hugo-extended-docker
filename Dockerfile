@@ -7,10 +7,12 @@ ENV DOCKER_HUGO_BASE_URL="https://github.com/gohugoio/hugo/releases/download"
 ENV DOCKER_HUGO_URL="${DOCKER_HUGO_BASE_URL}/v${DOCKER_HUGO_VERSION}/${DOCKER_HUGO_NAME}.tar.gz"
 ENV DOCKER_HUGO_CHECKSUM_URL="${DOCKER_HUGO_BASE_URL}/v${DOCKER_HUGO_VERSION}/hugo_${DOCKER_HUGO_VERSION}_checksums.txt"
 ARG INSTALL_NODE="false"
+ENV PATH="/assets:${PATH}"
+ENV PATH="/assets/sass_embedded:${PATH}"
 
-WORKDIR /build
+WORKDIR /assets
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
-RUN apk add --no-cache --virtual .build-deps wget && \
+RUN apk add --no-cache --virtual .build-deps wget curl && \
     apk add --no-cache \
     git \
     bash \
@@ -22,8 +24,11 @@ RUN apk add --no-cache --virtual .build-deps wget && \
     wget --quiet "${DOCKER_HUGO_CHECKSUM_URL}" && \
     grep "${DOCKER_HUGO_NAME}.tar.gz" "./hugo_${DOCKER_HUGO_VERSION}_checksums.txt" | sha256sum -c - && \
     tar -zxvf "${DOCKER_HUGO_NAME}.tar.gz" && \
-    mv ./hugo /usr/bin/hugo && \
+    rm "${DOCKER_HUGO_NAME}.tar.gz" && \
     hugo version && \
+    curl -LJO https://github.com/sass/dart-sass-embedded/releases/download/1.0.0-beta.5/sass_embedded-1.0.0-beta.5-linux-x64.tar.gz && \
+    tar -zxvf sass_embedded-1.0.0-beta.5-linux-x64.tar.gz && \
+    rm sass_embedded-1.0.0-beta.5-linux-x64.tar.gz && \
     apk del .build-deps && \
     if [ "${INSTALL_NODE}" = "true" ]; then \
         echo "Installing Node.js and npm..." && \
@@ -36,4 +41,4 @@ RUN apk add --no-cache --virtual .build-deps wget && \
     rm -rf /build
 
 WORKDIR /src
-ENTRYPOINT [ "/usr/bin/hugo" ]
+ENTRYPOINT [ "/assets/hugo" ]

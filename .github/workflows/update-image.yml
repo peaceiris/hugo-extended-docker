@@ -18,8 +18,8 @@ jobs:
     strategy:
       matrix:
         baseimage:
-          - "alpine:3.12"
-          - "golang:1.15-alpine3.12"
+          - "alpine:3.13"
+          - "golang:1.15-alpine3.13"
         node: [false, true]
         version:
           - "0.80.0"
@@ -28,7 +28,7 @@ jobs:
           - "0.77.0"
           - "0.76.5"
         exclude:
-          - baseimage: "alpine:3.12"
+          - baseimage: "alpine:3.13"
             node: true
     steps:
       - uses: actions/checkout@v2

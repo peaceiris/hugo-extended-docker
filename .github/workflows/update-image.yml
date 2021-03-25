@@ -60,10 +60,9 @@ jobs:
       - name: Login to Registries
         if: github.event_name != 'pull_request'
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
-          echo "${GH_PAT}" | docker login ghcr.io -u peaceiris --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u peaceiris --password-stdin
           echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
       - name: Push to GitHub Packages

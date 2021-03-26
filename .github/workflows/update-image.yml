@@ -19,7 +19,7 @@ jobs:
       matrix:
         baseimage:
           - "alpine:3.13"
-          - "golang:1.15-alpine3.13"
+          - "golang:1.16-alpine3.13"
         node: [false, true]
         version:
           - "0.82.0"

@@ -22,7 +22,7 @@ jobs:
     container:
       image: "ghcr.io/hadolint/hadolint:v2.2.0-alpine"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - run: hadolint ./Dockerfile
 
   push:
@@ -38,7 +38,7 @@ jobs:
           - baseimage: "alpine:3.13"
             node: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
 
       - name: Dump GitHub context
         env:

@@ -59,7 +59,8 @@ jobs:
 
       - name: Build ${{ matrix.baseimage }} base image
         run: |
-          docker buildx . --tag "${PKG_TAG}" \
+          docker buildx build . \
+            --tag "${PKG_TAG}" \
             --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
             --build-arg HUGO_VERSION="${{ matrix.version }}" \
             --build-arg INSTALL_NODE="${{ matrix.node }}" \

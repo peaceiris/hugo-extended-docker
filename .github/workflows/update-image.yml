@@ -59,6 +59,7 @@ jobs:
 
       - name: Build ${{ matrix.baseimage }} base image
         run: |
+          docker buildx create --use --driver docker-container
           docker buildx build . \
             --tag "${PKG_TAG}" \
             --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \

@@ -57,6 +57,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx
 
+      - run: docker version
+
       - name: Build ${{ matrix.baseimage }} base image
         run: |
           docker buildx create --use --driver docker-container

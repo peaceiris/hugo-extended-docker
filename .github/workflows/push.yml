@@ -20,7 +20,7 @@ jobs:
   hadolint:
     runs-on: ubuntu-18.04
     container:
-      image: "ghcr.io/hadolint/hadolint:v2.2.0-alpine"
+      image: "ghcr.io/hadolint/hadolint:v2.4.0-alpine"
     steps:
       - uses: actions/checkout@v2.3.4
       - run: hadolint ./Dockerfile
@@ -37,6 +37,9 @@ jobs:
         exclude:
           - baseimage: "alpine:3.13"
             node: true
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -62,18 +65,38 @@ jobs:
           echo "PKG_TAG=${DOCKER_BASE_NAME}:${TAG_NAME}" >> ${GITHUB_ENV}
           echo "HUB_TAG=${DOCKER_HUB_BASE_NAME}:${TAG_NAME}" >> ${GITHUB_ENV}
 
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx
+
+      - run: docker version
+
       - name: Build ${{ matrix.baseimage }} base image
         run: |
-          docker build . -t "${PKG_TAG}" \
+          docker buildx create --use --driver docker-container
+          docker buildx build . \
+            --tag "${PKG_TAG}" \
             --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
-            --build-arg INSTALL_NODE="${{ matrix.node }}"
+            --build-arg INSTALL_NODE="${{ matrix.node }}" \
+            --cache-from 'type=local,src=/tmp/.buildx-cache' \
+            --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new' \
+            --output 'type=docker'
           docker tag "${PKG_TAG}" "${HUB_TAG}"
+
+      - name: Replace cache dir
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - run: docker images
       - run: docker run --rm ${PKG_TAG} version
 
       - name: Login to Registries
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main'
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
@@ -81,9 +104,9 @@ jobs:
           echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
       - name: Push to GitHub Packages
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main'
         run: docker push "${PKG_TAG}"
 
       - name: Push to Docker Hub
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main'
         run: docker push "${HUB_TAG}"

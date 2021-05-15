@@ -66,7 +66,8 @@ jobs:
             --build-arg HUGO_VERSION="${{ matrix.version }}" \
             --build-arg INSTALL_NODE="${{ matrix.node }}" \
             --cache-from 'type=local,src=/tmp/.buildx-cache' \
-            --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new'
+            --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new' \
+            --output 'type=docker'
           docker tag "${PKG_TAG}" "${HUB_TAG}"
 
       - name: Replace cache dir

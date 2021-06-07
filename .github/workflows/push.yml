@@ -96,7 +96,7 @@ jobs:
       - run: docker run --rm ${PKG_TAG} version
 
       - name: Login to Registries
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request'
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
@@ -104,9 +104,9 @@ jobs:
           echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
       - name: Push to GitHub Packages
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request'
         run: docker push "${PKG_TAG}"
 
       - name: Push to Docker Hub
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request'
         run: docker push "${HUB_TAG}"

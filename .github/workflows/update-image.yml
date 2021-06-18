@@ -58,7 +58,8 @@ jobs:
             --tag "${PKG_TAG}" \
             --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
             --build-arg HUGO_VERSION="${{ matrix.version }}" \
-            --build-arg INSTALL_NODE="${{ matrix.node }}"
+            --build-arg INSTALL_NODE="${{ matrix.node }}" \
+            --output 'type=docker'
           docker tag "${PKG_TAG}" "${HUB_TAG}"
 
       - run: docker run --rm ${PKG_TAG} version

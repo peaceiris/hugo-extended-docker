@@ -10,8 +10,8 @@ ARG INSTALL_NODE="false"
 
 WORKDIR /build
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
-RUN apk add --no-cache --virtual .build-deps wget && \
-    apk add --no-cache \
+RUN apk add --update-cache --no-cache --virtual .build-deps wget && \
+    apk add --update-cache --no-cache \
     git \
     bash \
     make \

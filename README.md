@@ -12,11 +12,6 @@
 
 - [peaceiris/hugo - Docker Hub]
 
-[![Docker Hub Build Status](https://img.shields.io/docker/cloud/build/peaceiris/hugo.svg)](https://hub.docker.com/r/peaceiris/hugo)
-[![docker image size](https://images.microbadger.com/badges/image/peaceiris/hugo.svg)](https://microbadger.com/images/peaceiris/hugo)
-
-<!-- https://microbadger.com/ -->
-
 [![DockerHub Badge](https://dockeri.co/image/peaceiris/hugo)][peaceiris/hugo - Docker Hub]
 
 [peaceiris/hugo - Docker Hub]: https://hub.docker.com/r/peaceiris/hugo

@@ -22,11 +22,11 @@ jobs:
           - "golang:1.16-alpine3.13"
         node: [false, true]
         version:
+          - "0.87.0"
           - "0.86.1"
           - "0.85.0"
           - "0.84.4"
           - "0.83.1"
-          - "0.82.1"
         exclude:
           - baseimage: "alpine:3.13"
             node: true

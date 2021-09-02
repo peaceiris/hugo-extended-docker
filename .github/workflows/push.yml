@@ -31,11 +31,11 @@ jobs:
     strategy:
       matrix:
         baseimage:
-          - "alpine:3.13"
-          - "golang:1.16-alpine3.13"
+          - "alpine:3.14"
+          - "golang:1.16-alpine3.14"
         node: [false, true]
         exclude:
-          - baseimage: "alpine:3.13"
+          - baseimage: "alpine:3.14"
             node: true
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled

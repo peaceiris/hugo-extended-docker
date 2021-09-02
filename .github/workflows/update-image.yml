@@ -18,8 +18,8 @@ jobs:
     strategy:
       matrix:
         baseimage:
-          - "alpine:3.13"
-          - "golang:1.16-alpine3.13"
+          - "alpine:3.14"
+          - "golang:1.16-alpine3.14"
         node: [false, true]
         version:
           - "0.88.0"
@@ -28,7 +28,7 @@ jobs:
           - "0.85.0"
           - "0.84.4"
         exclude:
-          - baseimage: "alpine:3.13"
+          - baseimage: "alpine:3.14"
             node: true
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled

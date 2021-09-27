@@ -12,6 +12,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  packages: write
+
 env:
   DOCKER_BASE_NAME: ghcr.io/peaceiris/hugo
   DOCKER_HUB_BASE_NAME: peaceiris/hugo

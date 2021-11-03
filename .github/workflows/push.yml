@@ -89,7 +89,7 @@ jobs:
             --tag "${PKG_TAG}" \
             --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
             --build-arg INSTALL_NODE="${{ matrix.node }}" \
-            --platform linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6 \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --cache-from 'type=local,src=/tmp/.buildx-cache' \
             --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new' \
             --output 'type=docker'

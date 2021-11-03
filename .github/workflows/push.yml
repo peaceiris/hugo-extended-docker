@@ -48,6 +48,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
 
+      - uses: docker/setup-qemu-action@v1
+
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -87,6 +89,7 @@ jobs:
             --tag "${PKG_TAG}" \
             --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
             --build-arg INSTALL_NODE="${{ matrix.node }}" \
+            --platform linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6 \
             --cache-from 'type=local,src=/tmp/.buildx-cache' \
             --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new' \
             --output 'type=docker'

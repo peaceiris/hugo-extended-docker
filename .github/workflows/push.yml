@@ -48,7 +48,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
 
-      - uses: docker/setup-qemu-action@v1
       - run: docker version
 
       - name: Login to Registries
@@ -102,26 +101,87 @@ jobs:
             --output 'type=docker'
           docker tag "${PKG_TAG}" "${HUB_TAG}"
 
-      - name: Build ${{ matrix.baseimage }} base image
-        if: ${{ github.event_name != 'pull_request' }}
-        run: |
-          docker buildx create --use --driver docker-container
-          docker buildx build . \
-            --tag "${PKG_TAG}" \
-            --tag "${HUB_TAG}" \
-            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
-            --build-arg INSTALL_NODE="${{ matrix.node }}" \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --cache-from 'type=local,src=/tmp/.buildx-cache' \
-            --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new' \
-            --push
-
       - name: Replace cache dir
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - run: docker images
-        if: ${{ github.event_name == 'pull_request' }}
       - run: docker run --rm ${PKG_TAG} version
+
+      - name: Push to GitHub Packages
+        if: github.event_name != 'pull_request'
+        run: docker push "${PKG_TAG}"
+
+      - name: Push to Docker Hub
+        if: github.event_name != 'pull_request'
+        run: docker push "${HUB_TAG}"
+
+  push-arm:
+    runs-on: ubuntu-20.04
+    needs: hadolint
+    strategy:
+      matrix:
+        arch:
+          - "ARM"
+          - "ARM64"
+        baseimage:
+          - "alpine:3.14"
+          - "golang:1.17-alpine3.14"
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      DOCKER_BUILDKIT: 1
+    steps:
+      - uses: actions/checkout@v2.4.0
+
+      - uses: docker/setup-qemu-action@v1
+        with:
+          platforms: arm,arm64
+      - name: Setup docker buildx
+        run: docker buildx create --use --driver docker-container
+
+      - name: Login to Registries
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u peaceiris --password-stdin
+          echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
+
+      - name: Set env
+        run: |
+          if [ "${{ github.event_name }}" = 'release' ]; then
+            export TAG_NAME="${{ github.event.release.tag_name }}"
+          else
+            export TAG_NAME="latest"
+          fi
+          if [ "${{ startsWith( matrix.baseimage, 'golang') }}" = "true" ]; then
+            if [ "${{ matrix.node }}" = "true" ]; then
+              export TAG_NAME="${TAG_NAME}-full"
+            else
+              export TAG_NAME="${TAG_NAME}-mod"
+            fi
+          fi
+          echo "PKG_TAG=${DOCKER_BASE_NAME}:${TAG_NAME}" >> ${GITHUB_ENV}
+          echo "HUB_TAG=${DOCKER_HUB_BASE_NAME}:${TAG_NAME}" >> ${GITHUB_ENV}
+
+      - name: Build ${{ matrix.baseimage }} base image on pull-request
         if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          docker buildx build . \
+            --tag "${PKG_TAG}" \
+            --tag "${HUB_TAG}" \
+            --build-arg HUGO_ARCH="${{ matrix.arch }}" \
+            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
+            --platform linux/arm64,linux/arm/v7
+
+      - name: Build ${{ matrix.baseimage }} base image
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          docker buildx build . \
+            --tag "${PKG_TAG}" \
+            --tag "${HUB_TAG}" \
+            --build-arg HUGO_ARCH="${{ matrix.arch }}" \
+            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
+            --platform linux/arm64,linux/arm/v7 \
+            --push

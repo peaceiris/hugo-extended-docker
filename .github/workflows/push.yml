@@ -23,15 +23,15 @@ env:
 
 jobs:
   hadolint:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     container:
-      image: "ghcr.io/hadolint/hadolint:v2.4.1-alpine"
+      image: "ghcr.io/hadolint/hadolint:v2.7.0-alpine"
     steps:
       - uses: actions/checkout@v2.4.0
       - run: hadolint ./Dockerfile
 
   push:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     needs: hadolint
     strategy:
       matrix:
@@ -49,6 +49,15 @@ jobs:
       - uses: actions/checkout@v2.4.0
 
       - uses: docker/setup-qemu-action@v1
+      - run: docker version
+
+      - name: Login to Registries
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u peaceiris --password-stdin
+          echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
 
       - name: Dump GitHub context
         env:
@@ -80,20 +89,32 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx
 
-      - run: docker version
-
-      - name: Build ${{ matrix.baseimage }} base image
+      - name: Build ${{ matrix.baseimage }} base image on pull_request
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           docker buildx create --use --driver docker-container
           docker buildx build . \
             --tag "${PKG_TAG}" \
             --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
             --build-arg INSTALL_NODE="${{ matrix.node }}" \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --cache-from 'type=local,src=/tmp/.buildx-cache' \
             --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new' \
             --output 'type=docker'
           docker tag "${PKG_TAG}" "${HUB_TAG}"
+
+      - name: Build ${{ matrix.baseimage }} base image
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          docker buildx create --use --driver docker-container
+          docker buildx build . \
+            --tag "${PKG_TAG}" \
+            --tag "${HUB_TAG}" \
+            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
+            --build-arg INSTALL_NODE="${{ matrix.node }}" \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --cache-from 'type=local,src=/tmp/.buildx-cache' \
+            --cache-to 'type=local,mode=max,dest=/tmp/.buildx-cache-new' \
+            --push
 
       - name: Replace cache dir
         run: |
@@ -101,20 +122,6 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - run: docker images
+        if: ${{ github.event_name == 'pull_request' }}
       - run: docker run --rm ${PKG_TAG} version
-
-      - name: Login to Registries
-        if: github.event_name != 'pull_request'
-        env:
-          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u peaceiris --password-stdin
-          echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
-
-      - name: Push to GitHub Packages
-        if: github.event_name != 'pull_request'
-        run: docker push "${PKG_TAG}"
-
-      - name: Push to Docker Hub
-        if: github.event_name != 'pull_request'
-        run: docker push "${HUB_TAG}"
+        if: ${{ github.event_name == 'pull_request' }}

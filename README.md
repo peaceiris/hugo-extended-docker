@@ -46,8 +46,9 @@ services:
   hugo:
     container_name: hugo
     image: peaceiris/hugo:v0.x.x
-    # image: peaceiris/hugo:v0.x.x-mod   # Hugo Modules
-    # image: peaceiris/hugo:v0.x.x-full  # Hugo Modules and Node.js
+    # image: peaceiris/hugo:v0.x.x-mod      # Hugo Modules
+    # image: peaceiris/hugo:v0.x.x-full     # Hugo Modules and Node.js
+    # image: ghcr.io/peaceiris/hugo:v0.x.x  # Docker images on GitHub Packages
     ports:
       - 1313:1313
     volumes:

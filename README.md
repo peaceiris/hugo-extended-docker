@@ -16,6 +16,10 @@
 
 [peaceiris/hugo - Docker Hub]: https://hub.docker.com/r/peaceiris/hugo
 
+Docker images on GitHub Packages [ghcr.io/peaceiris/hugo] are also available.
+
+[ghcr.io/peaceiris/hugo]: https://github.com/users/peaceiris/packages/container/package/hugo
+
 
 
 ## Getting started
@@ -25,15 +29,14 @@
 | `peaceiris/hugo:v0.x.x` | `alpine:3.14` | 74MB | Minimum image |
 | `peaceiris/hugo:v0.x.x-mod` | `golang:1.17-alpine3.14` | 367MB | Hugo Modules feature is available |
 | `peaceiris/hugo:v0.x.x-full` | `golang:1.17-alpine3.14` | 420MB | Hugo Modules and Node.js are available |
+| `ghcr.io/peaceiris/hugo:v0.x.x` | `alpine:3.14` | 74MB | GitHub Packages: Minimum image |
+| `ghcr.io/peaceiris/hugo:v0.x.x-mod` | `golang:1.17-alpine3.14` | 367MB | GitHub Packages: Hugo Modules feature is available |
+| `ghcr.io/peaceiris/hugo:v0.x.x-full` | `golang:1.17-alpine3.14` | 420MB | GitHub Packages: Hugo Modules and Node.js are available |
 
 The image size is a result of the `docker images` command.
 
 - Hugo Modules: `hugo mod`
 - Hugo Modules and Node.js: `hugo mod`, `node` and `npm`
-
-Docker images on GitHub Packages [ghcr.io/peaceiris/hugo] are also available.
-
-[ghcr.io/peaceiris/hugo]: https://github.com/users/peaceiris/packages/container/package/hugo
 
 ### (1) Docker Compose
 

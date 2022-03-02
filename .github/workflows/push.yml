@@ -27,7 +27,7 @@ jobs:
     container:
       image: "ghcr.io/hadolint/hadolint:v2.4.1-alpine"
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - run: hadolint ./Dockerfile
 
   push:
@@ -46,7 +46,7 @@ jobs:
       DOCKER_CLI_EXPERIMENTAL: enabled
       DOCKER_BUILDKIT: 1
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
 
       - name: Dump GitHub context
         env:

@@ -1,0 +1,114 @@
+name: Docker Image Push
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "13 13 */8 * *"
+  pull_request:
+    paths-ignore:
+      - "**.md"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+
+permissions:
+  actions: write
+  contents: read
+  packages: write
+
+env:
+  DOCKER_BASE_NAME: ghcr.io/peaceiris/hugo
+  DOCKER_HUB_BASE_NAME: peaceiris/hugo
+
+jobs:
+  hadolint:
+    uses: peaceiris/workflows/.github/workflows/hadolint.yml@v0.12.0
+
+  main:
+    runs-on: ubuntu-20.04
+    needs: hadolint
+    strategy:
+      matrix:
+        baseimage:
+          - "alpine:3.15"
+          - "golang:1.18-alpine3.15"
+        node: [false, true]
+        exclude:
+          - baseimage: "alpine:3.15"
+            node: true
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      DOCKER_BUILDKIT: 1
+    steps:
+      - uses: actions/checkout@v3
+
+      # https://github.com/peaceiris/workflows/blob/main/setup-go/action.yml
+      - uses: peaceiris/workflows/setup-go@v0.11.0
+        with:
+          go-version: '1.18'
+
+      - name: Set env
+        run: |
+          HUGO_VERSION="$(make get-hugo-version)"
+          TAG_NAME="v${HUGO_VERSION}"
+          TAG_NAME_LATEST="latest"
+          if [ "${{ startsWith( matrix.baseimage, 'golang') }}" = "true" ]; then
+            if [ "${{ matrix.node }}" = "true" ]; then
+              TAG_NAME="${TAG_NAME}-full"
+              TAG_NAME_LATEST="${TAG_NAME_LATEST}-full"
+            else
+              TAG_NAME="${TAG_NAME}-mod"
+              TAG_NAME_LATEST="${TAG_NAME_LATEST}-mod"
+            fi
+          fi
+          {
+            echo "TAG_NAME=${TAG_NAME}"
+            echo "HUGO_VERSION=${HUGO_VERSION}"
+            echo "PKG_TAG=${DOCKER_BASE_NAME}:${TAG_NAME}"
+            echo "PKG_TAG_LATEST=${DOCKER_BASE_NAME}:${TAG_NAME_LATEST}"
+            echo "HUB_TAG=${DOCKER_HUB_BASE_NAME}:${TAG_NAME}"
+            echo "HUB_TAG_LATEST=${DOCKER_HUB_BASE_NAME}:${TAG_NAME_LATEST}"
+          } >> "${GITHUB_ENV}"
+
+      - run: docker version
+
+      - name: Build ${{ matrix.baseimage }} base image
+        run: |
+          DOCKER_SCOPE="hugo-${TAG_NAME}"
+          docker buildx create --use --driver docker-container
+          docker buildx build . \
+            --tag "${PKG_TAG}" \
+            --build-arg DOCKER_HUGO_VERSION="${HUGO_VERSION}" \
+            --build-arg BASE_IMAGE="${{ matrix.baseimage }}" \
+            --build-arg INSTALL_NODE="${{ matrix.node }}" \
+            --cache-from "type=gha,scope=${DOCKER_SCOPE}" \
+            --cache-to "type=gha,mode=max,scope=${DOCKER_SCOPE}" \
+            --output "type=docker"
+          docker tag "${PKG_TAG}" "${HUB_TAG}"
+          docker tag "${PKG_TAG}" "${PKG_TAG_LATEST}"
+          docker tag "${HUB_TAG}" "${HUB_TAG_LATEST}"
+
+      - run: docker images
+      - run: docker run --rm "${PKG_TAG}" version
+
+      - name: Login to Registries
+        if: github.event_name != 'pull_request'
+        env:
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u peaceiris --password-stdin
+          echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
+
+      - name: Push to GitHub Packages
+        if: github.event_name != 'pull_request'
+        run: |
+          docker push "${PKG_TAG}"
+          docker push "${PKG_TAG_LATEST}"
+
+      - name: Push to Docker Hub
+        if: github.event_name != 'pull_request'
+        run: |
+          docker push "${HUB_TAG}"
+          docker push "${HUB_TAG_LATEST}"

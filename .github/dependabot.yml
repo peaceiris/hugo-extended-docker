@@ -9,3 +9,12 @@ updates:
     timezone: Japan
   commit-message:
     prefix: ci
+
+- package-ecosystem: "gomod"
+  directory: "/deps"
+  schedule:
+    interval: "daily"
+    time: "11:00"
+    timezone: "Japan"
+  commit-message:
+    prefix: "deps"

@@ -44,10 +44,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set versions
+        id: versions
+        run: |
+          echo "::set-output name=GO_VERSION::$(make get-go-version)"
+
       # https://github.com/peaceiris/workflows/blob/main/setup-go/action.yml
       - uses: peaceiris/workflows/setup-go@v0.12.0
         with:
-          go-version: '1.18'
+          go-version: "${{ steps.versions.outputs.GO_VERSION }}"
 
       - name: Set env
         run: |

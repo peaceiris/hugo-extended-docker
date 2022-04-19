@@ -2,11 +2,11 @@ module hugo-extended-docker
 
 go 1.18
 
-require github.com/gohugoio/hugo v0.97.2
+require github.com/gohugoio/hugo v0.97.3
 
 require (
 	github.com/armon/go-radix v1.0.0 // indirect
-	github.com/bep/overlayfs v0.5.0 // indirect
+	github.com/bep/overlayfs v0.6.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.5 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect

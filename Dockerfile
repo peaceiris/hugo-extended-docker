@@ -36,8 +36,4 @@ RUN apk add --update-cache --no-cache --virtual .build-deps wget && \
     rm -rf /build
 
 WORKDIR /src
-
-RUN adduser -D gopher && chown -R gopher /src
-USER gopher
-
 ENTRYPOINT [ "/usr/bin/hugo" ]

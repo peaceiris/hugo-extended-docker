@@ -24,7 +24,7 @@ RUN apk add --update-cache --no-cache --virtual .build-deps wget && \
     tar -zxvf "${DOCKER_HUGO_NAME}.tar.gz" && \
     mv ./hugo /usr/bin/hugo && \
     hugo version && \
-    git config --global --add safe.directory / && \
+    git config --global --add safe.directory '*' && \
     apk del .build-deps && \
     if [ "${INSTALL_NODE}" = "true" ]; then \
         echo "Installing Node.js and npm..." && \

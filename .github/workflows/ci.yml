@@ -103,8 +103,8 @@ jobs:
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u peaceiris --password-stdin
-          echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ayamebot --password-stdin
+          echo "${DOCKER_HUB_TOKEN}" | docker login -u ayamebot --password-stdin
 
       - name: Push to GitHub Packages
         if: github.event_name != 'pull_request'

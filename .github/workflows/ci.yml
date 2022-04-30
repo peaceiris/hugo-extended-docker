@@ -38,9 +38,6 @@ jobs:
         exclude:
           - baseimage: "alpine:3.15"
             node: true
-    env:
-      DOCKER_CLI_EXPERIMENTAL: enabled
-      DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v3
 
@@ -98,13 +95,13 @@ jobs:
       - run: docker images
       - run: docker run --rm "${PKG_TAG}" version
 
-      - name: Login to Registries
-        if: github.event_name != 'pull_request'
+      - run: make login
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ayamebot --password-stdin
-          echo "${DOCKER_HUB_TOKEN}" | docker login -u peaceiris --password-stdin
+
+      - run: make login-ghcr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to GitHub Packages
         if: github.event_name != 'pull_request'

@@ -5,15 +5,16 @@ USERNAME := peaceiris
 DOCKER_IMAGE_NAME := hugo
 DOCKER_HUB_BASE_NAME := ${USERNAME}/${DOCKER_IMAGE_NAME}
 DOCKER_BASE_NAME := ghcr.io/${DOCKER_HUB_BASE_NAME}
-DOCKER_SCOPE := docker-${TAG_NAME}
 DOCKER_HUGO_VERSION := $(shell cd ./deps && go mod edit -json | jq -r '.Require[] | select(.Path == "github.com/gohugoio/hugo") | .Version | split("v") | .[1]')
 
-TAG_NAME := v${DOCKER_HUGO_VERSION}
-PKG_TAG := ${DOCKER_BASE_NAME}:${TAG_NAME}
-HUB_TAG := ${DOCKER_HUB_BASE_NAME}:${TAG_NAME}
-TAG_NAME_LATEST := "latest"
-PKG_TAG_LATEST := ${DOCKER_BASE_NAME}:${TAG_NAME_LATEST}
-HUB_TAG_LATEST := ${DOCKER_HUB_BASE_NAME}:${TAG_NAME_LATEST}
+TAG_SPEC := v${DOCKER_HUGO_VERSION}
+DOCKER_SCOPE := docker-${TAG_SPEC}
+
+PKG_SPEC := ${DOCKER_BASE_NAME}:${TAG_SPEC}
+HUB_SPEC := ${DOCKER_HUB_BASE_NAME}:${TAG_SPEC}
+TAG_LATEST := latest
+PKG_LATEST := ${DOCKER_BASE_NAME}:${TAG_LATEST}
+HUB_LATEST := ${DOCKER_HUB_BASE_NAME}:${TAG_LATEST}
 
 
 .PHONY: get-go-version
@@ -32,6 +33,7 @@ login-ghcr:
 .PHONY: setup-buildx
 setup-buildx:
 	docker buildx create --use --driver docker-container
+	docker version
 
 .PHONY: build-tpl
 build-tpl:
@@ -47,9 +49,9 @@ build-tpl:
 
 .PHONY: tag
 tag:
-	docker tag ${PKG_NAME} ${HUB_TAG}
-	docker tag ${PKG_NAME} ${PKG_TAG_LATEST}
-	docker tag ${PKG_NAME} ${HUB_TAG_LATEST}
+	docker tag ${PKG_SPEC} ${HUB_SPEC}
+	docker tag ${PKG_SPEC} ${HUB_LATEST}
+	docker tag ${PKG_SPEC} ${PKG_LATEST}
 
 .PHONY: dump
 dump:
@@ -62,35 +64,51 @@ build: setup-buildx build-slim build-mod build-full
 .PHONY: build-slim
 build-slim:
 	$(MAKE) build-tpl \
-		PKG_NAME="${PKG_TAG}" \
+		PKG_NAME="${PKG_SPEC}" \
 		BASE_IMAGE="alpine:3.15" \
 		INSTALL_NODE="false"
 	$(MAKE) tag \
-		PKG_NAME="${PKG_TAG}" \
-		TAG_NAME_LATEST="${TAG_NAME_LATEST}" \
-		HUB_TAG="${HUB_TAG}"
-	$(MAKE) dump PKG_NAME="${PKG_TAG}"
+		TAG_SPEC="v${DOCKER_HUGO_VERSION}" \
+		TAG_LATEST="latest"
+	$(MAKE) dump PKG_NAME="${PKG_SPEC}"
 
 .PHONY: build-mod
 build-mod:
 	$(MAKE) build-tpl \
-		PKG_NAME="${PKG_TAG}-mod" \
+		PKG_NAME="${PKG_SPEC}-mod" \
 		BASE_IMAGE="golang:1.18-alpine3.15" \
 		INSTALL_NODE="false"
 	$(MAKE) tag \
-		PKG_NAME="${PKG_TAG}-mod" \
-		TAG_NAME_LATEST="${TAG_NAME_LATEST}-mod" \
-		HUB_TAG="${HUB_TAG}-mod"
-	$(MAKE) dump PKG_NAME="${PKG_TAG}"
+		TAG_SPEC="v${DOCKER_HUGO_VERSION}-mod" \
+		TAG_LATEST="latest-mod"
+	$(MAKE) dump PKG_NAME="${PKG_SPEC}-mod"
 
 .PHONY: build-full
 build-full:
 	$(MAKE) build-tpl \
-		PKG_NAME="${PKG_TAG}-full" \
+		PKG_NAME="${PKG_SPEC}-full" \
 		BASE_IMAGE="golang:1.18-alpine3.15" \
 		INSTALL_NODE="true"
 	$(MAKE) tag \
-		PKG_NAME="${PKG_TAG}-full" \
-		TAG_NAME_LATEST="${TAG_NAME_LATEST}-full" \
-		HUB_TAG="${HUB_TAG}-full"
-	$(MAKE) dump PKG_NAME="${PKG_TAG}"
+		TAG_SPEC="v${DOCKER_HUGO_VERSION}-full" \
+		TAG_LATEST="latest-full"
+	$(MAKE) dump PKG_NAME="${PKG_SPEC}-full"
+
+.PHONY: push-tpl
+push-tpl:
+	docker push "${PKG_SPEC}"
+	docker push "${HUB_SPEC}"
+	docker push "${PKG_LATEST}"
+	docker push "${HUB_LATEST}"
+
+.PHONY: push
+push:
+	$(MAKE) push-tpl \
+		TAG_SPEC="v${DOCKER_HUGO_VERSION}" \
+		TAG_LATEST="latest"
+	$(MAKE) push-tpl \
+		TAG_SPEC="v${DOCKER_HUGO_VERSION}-mod" \
+		TAG_LATEST="latest-mod"
+	$(MAKE) push-tpl \
+		TAG_SPEC="v${DOCKER_HUGO_VERSION}-full" \
+		TAG_LATEST="latest-full"

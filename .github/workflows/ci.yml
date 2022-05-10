@@ -13,11 +13,6 @@ on:
     paths-ignore:
       - "**.md"
 
-permissions:
-  actions: write
-  contents: read
-  packages: write
-
 jobs:
   hadolint:
     uses: peaceiris/workflows/.github/workflows/hadolint.yml@v0.12.0
@@ -25,6 +20,10 @@ jobs:
   main:
     runs-on: ubuntu-20.04
     needs: hadolint
+    permissions:
+      actions: write
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v3
 
@@ -38,25 +37,15 @@ jobs:
         with:
           go-version: "${{ steps.versions.outputs.GO_VERSION }}"
 
-      - run: docker version
       - run: make build
 
-      - run: make login
+      - name: docker login
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-
-      - run: make login-ghcr
-        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push to GitHub Packages
-        if: github.event_name != 'pull_request'
         run: |
-          docker push "${PKG_TAG}"
-          docker push "${PKG_TAG_LATEST}"
+          make login
+          make login-ghcr
 
-      - name: Push to Docker Hub
+      - run: make push
         if: github.event_name != 'pull_request'
-        run: |
-          docker push "${HUB_TAG}"
-          docker push "${HUB_TAG_LATEST}"

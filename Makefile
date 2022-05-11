@@ -115,18 +115,18 @@ push-hub-latest:
 
 .PHONY: push-slim
 push-slim:
-	$(MAKE) -j4 push-tpl \
+	$(MAKE) push-tpl \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}" \
 		TAG_LATEST="latest"
 
 .PHONY: push-mod
 push-mod:
-	$(MAKE) -j4 push-tpl \
+	$(MAKE) push-tpl \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-mod" \
 		TAG_LATEST="latest-mod"
 
 .PHONY: push-full
 push-full:
-	$(MAKE) -j4 push-tpl \
+	$(MAKE) push-tpl \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-full" \
 		TAG_LATEST="latest-full"

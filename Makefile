@@ -95,20 +95,38 @@ build-full:
 	$(MAKE) dump PKG_NAME="${PKG_SPEC}-full"
 
 .PHONY: push-tpl
-push-tpl:
+push-tpl: push-pkg-spec push-hub-spec push-pkg-latest push-hub-latest
+
+.PHONY: push-pkg-spec
+push-pkg-spec:
 	docker push "${PKG_SPEC}"
+
+.PHONY: push-hub-spec
+push-hub-spec:
 	docker push "${HUB_SPEC}"
+
+.PHONY: push-pkg-latest
+push-pkg-latest:
 	docker push "${PKG_LATEST}"
+
+.PHONY: push-hub-latest
+push-hub-latest:
 	docker push "${HUB_LATEST}"
 
-.PHONY: push
-push:
-	$(MAKE) push-tpl \
+.PHONY: push-slim
+push-slim:
+	$(MAKE) -j4 push-tpl \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}" \
 		TAG_LATEST="latest"
-	$(MAKE) push-tpl \
+
+.PHONY: push-mod
+push-mod:
+	$(MAKE) -j4 push-tpl \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-mod" \
 		TAG_LATEST="latest-mod"
-	$(MAKE) push-tpl \
+
+.PHONY: push-full
+push-full:
+	$(MAKE) -j4 push-tpl \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-full" \
 		TAG_LATEST="latest-full"

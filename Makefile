@@ -95,23 +95,9 @@ build-full:
 	$(MAKE) dump PKG_NAME="${PKG_SPEC}-full"
 
 .PHONY: push-tpl
-push-tpl: push-pkg-spec push-hub-spec push-pkg-latest push-hub-latest
-
-.PHONY: push-pkg-spec
-push-pkg-spec:
-	docker push "${PKG_SPEC}"
-
-.PHONY: push-hub-spec
-push-hub-spec:
-	docker push "${HUB_SPEC}"
-
-.PHONY: push-pkg-latest
-push-pkg-latest:
-	docker push "${PKG_LATEST}"
-
-.PHONY: push-hub-latest
-push-hub-latest:
-	docker push "${HUB_LATEST}"
+push-tpl:
+	echo "${PKG_SPEC}\n${HUB_SPEC}" | xargs -I % docker push %
+	echo "${PKG_LATEST}\n${HUB_LATEST}" | xargs -I % docker push %
 
 .PHONY: push-slim
 push-slim:

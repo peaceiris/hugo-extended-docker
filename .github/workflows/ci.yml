@@ -43,6 +43,7 @@ jobs:
       - run: make build-${{ matrix.type }}
 
       - name: docker login
+        if: github.event_name != 'pull_request'
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

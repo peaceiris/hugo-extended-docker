@@ -36,7 +36,7 @@ jobs:
           echo "::set-output name=GO_VERSION::$(make get-go-version)"
 
       # https://github.com/peaceiris/workflows/blob/main/setup-go/action.yml
-      - uses: peaceiris/workflows/setup-go@v0.14.1
+      - uses: peaceiris/workflows/setup-go@v0.15.0
         with:
           go-version: "${{ steps.versions.outputs.GO_VERSION }}"
 

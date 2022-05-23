@@ -21,6 +21,7 @@ jobs:
       actions: write
       contents: read
       packages: write
+    timeout-minutes: 5
     strategy:
       matrix:
         type:

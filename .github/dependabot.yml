@@ -5,7 +5,7 @@ updates:
   directory: "/"
   schedule:
     interval: "daily"
-    time: '11:00'
+    time: '10:00'
     timezone: Japan
   commit-message:
     prefix: ci
@@ -14,7 +14,7 @@ updates:
   directory: "/deps"
   schedule:
     interval: "daily"
-    time: "11:00"
+    time: "10:00"
     timezone: "Japan"
   commit-message:
     prefix: "deps"

@@ -2,7 +2,7 @@ module hugo-extended-docker
 
 go 1.18
 
-require github.com/gohugoio/hugo v0.100.1
+require github.com/gohugoio/hugo v0.100.2
 
 require (
 	github.com/armon/go-radix v1.0.0 // indirect
@@ -17,7 +17,7 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/niklasfasching/go-org v1.6.2 // indirect
-	github.com/pelletier/go-toml/v2 v2.0.0-beta.8 // indirect
+	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/spf13/afero v1.8.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect

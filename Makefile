@@ -65,7 +65,7 @@ build: setup-buildx build-slim build-mod build-full
 build-slim:
 	$(MAKE) build-tpl \
 		PKG_NAME="${PKG_SPEC}" \
-		BASE_IMAGE="alpine:3.15" \
+		BASE_IMAGE="alpine:3.16" \
 		INSTALL_NODE="false"
 	$(MAKE) tag \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}" \
@@ -76,7 +76,7 @@ build-slim:
 build-mod:
 	$(MAKE) build-tpl \
 		PKG_NAME="${PKG_SPEC}-mod" \
-		BASE_IMAGE="golang:1.18-alpine3.15" \
+		BASE_IMAGE="golang:1.19-alpine3.16" \
 		INSTALL_NODE="false"
 	$(MAKE) tag \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-mod" \
@@ -87,7 +87,7 @@ build-mod:
 build-full:
 	$(MAKE) build-tpl \
 		PKG_NAME="${PKG_SPEC}-full" \
-		BASE_IMAGE="golang:1.18-alpine3.15" \
+		BASE_IMAGE="golang:1.19-alpine3.16" \
 		INSTALL_NODE="true"
 	$(MAKE) tag \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-full" \

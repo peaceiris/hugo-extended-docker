@@ -24,12 +24,12 @@ Docker images on GitHub Packages [ghcr.io/peaceiris/hugo] are also available.
 
 | Image tag | Base Image | Image size | Notes |
 |---|---|---|---|
-| `peaceiris/hugo:v0.x.x` | `alpine:3.15` | 74MB | Minimum image |
-| `peaceiris/hugo:v0.x.x-mod` | `golang:1.18-alpine3.15` | 367MB | Hugo Modules feature is available |
-| `peaceiris/hugo:v0.x.x-full` | `golang:1.18-alpine3.15` | 420MB | Hugo Modules and Node.js are available |
-| `ghcr.io/peaceiris/hugo:v0.x.x` | `alpine:3.15` | 74MB | GitHub Packages: Minimum image |
-| `ghcr.io/peaceiris/hugo:v0.x.x-mod` | `golang:1.18-alpine3.15` | 367MB | GitHub Packages: Hugo Modules feature is available |
-| `ghcr.io/peaceiris/hugo:v0.x.x-full` | `golang:1.18-alpine3.15` | 420MB | GitHub Packages: Hugo Modules and Node.js are available |
+| `peaceiris/hugo:v0.x.x` | `alpine:3.16` | 74MB | Minimum image |
+| `peaceiris/hugo:v0.x.x-mod` | `golang:1.19-alpine3.16` | 367MB | Hugo Modules feature is available |
+| `peaceiris/hugo:v0.x.x-full` | `golang:1.19-alpine3.16` | 420MB | Hugo Modules and Node.js are available |
+| `ghcr.io/peaceiris/hugo:v0.x.x` | `alpine:3.16` | 74MB | GitHub Packages: Minimum image |
+| `ghcr.io/peaceiris/hugo:v0.x.x-mod` | `golang:1.19-alpine3.16` | 367MB | GitHub Packages: Hugo Modules feature is available |
+| `ghcr.io/peaceiris/hugo:v0.x.x-full` | `golang:1.19-alpine3.16` | 420MB | GitHub Packages: Hugo Modules and Node.js are available |
 
 The image size is a result of the `docker images` command.
 

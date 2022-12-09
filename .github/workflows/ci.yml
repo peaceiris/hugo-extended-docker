@@ -36,7 +36,13 @@ jobs:
         with:
           go-version-file: "deps/go.mod"
 
+      - uses: peaceiris/actions-export-envs@v0.1.1
+        id: envs
+
       - run: make build-${{ matrix.type }}
+        env:
+          ACTIONS_RUNTIME_TOKEN: ${{ steps.envs.outputs.ACTIONS_RUNTIME_TOKEN }}
+          ACTIONS_CACHE_URL: ${{ steps.envs.outputs.ACTIONS_CACHE_URL }}
 
       - name: docker login
         if: github.event_name != 'pull_request'

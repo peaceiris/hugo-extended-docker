@@ -8,7 +8,7 @@ DOCKER_BASE_NAME := ghcr.io/${DOCKER_HUB_BASE_NAME}
 DOCKER_HUGO_VERSION := $(shell cd ./deps && go mod edit -json | jq -r '.Require[] | select(.Path == "github.com/gohugoio/hugo") | .Version | split("v") | .[1]')
 
 TAG_SPEC := v${DOCKER_HUGO_VERSION}
-DOCKER_SCOPE := docker-${TAG_SPEC}
+DOCKER_SCOPE := action-image-${GITHUB_REF_NAME}
 
 PKG_SPEC := ${DOCKER_BASE_NAME}:${TAG_SPEC}
 HUB_SPEC := ${DOCKER_HUB_BASE_NAME}:${TAG_SPEC}
@@ -20,7 +20,6 @@ HUB_LATEST := ${DOCKER_HUB_BASE_NAME}:${TAG_LATEST}
 .PHONY: get-go-version
 get-go-version:
 	@cd ./deps && go mod edit -json | jq -r '.Go'
-
 
 .PHONY: login
 login:
@@ -36,7 +35,7 @@ setup-buildx:
 	docker version
 
 .PHONY: build-tpl
-build-tpl:
+build-tpl: setup-buildx
 	docker buildx build . \
 		--tag "${PKG_NAME}" \
 		--platform "linux/amd64" \
@@ -58,7 +57,7 @@ dump:
 	docker run --rm "${PKG_NAME}" version
 
 .PHONY: build
-build: setup-buildx build-slim build-mod build-full
+build: build-slim build-mod build-full
 	docker images
 
 .PHONY: build-slim

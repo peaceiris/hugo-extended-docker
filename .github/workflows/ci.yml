@@ -2,6 +2,8 @@ name: CI
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "19 19 */7 * *"
   pull_request:
     paths-ignore:
       - "**.md"

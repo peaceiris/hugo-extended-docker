@@ -41,10 +41,18 @@ jobs:
       - uses: peaceiris/actions-export-envs@v1.1.0
         id: envs
 
-      - run: make build-${{ matrix.type }}
+      - name: make build-${{ matrix.type }} with cache
+        run: make build-${{ matrix.type }}
+        if: ${{ github.event_name == 'pull_request' }}
         env:
           ACTIONS_RUNTIME_TOKEN: ${{ steps.envs.outputs.ACTIONS_RUNTIME_TOKEN }}
           ACTIONS_CACHE_URL: ${{ steps.envs.outputs.ACTIONS_CACHE_URL }}
+
+      - name: make build-${{ matrix.type }} without cache
+        run: make build-${{ matrix.type }}
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          DOCKER_ENABLE_CACHE: true
 
       - name: docker login
         if: github.event_name != 'pull_request'

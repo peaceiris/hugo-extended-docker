@@ -36,6 +36,7 @@ setup-buildx:
 
 .PHONY: build-tpl
 build-tpl: setup-buildx
+ifdef DOCKER_ENABLE_CACHE
 	docker buildx build . \
 		--tag "${PKG_NAME}" \
 		--platform "linux/amd64" \
@@ -45,6 +46,15 @@ build-tpl: setup-buildx
 		--output "type=docker" \
 		--cache-from "type=gha,scope=${DOCKER_SCOPE}" \
 		--cache-to "type=gha,mode=max,scope=${DOCKER_SCOPE}"
+else
+	docker buildx build . \
+		--tag "${PKG_NAME}" \
+		--platform "linux/amd64" \
+		--build-arg DOCKER_HUGO_VERSION="${DOCKER_HUGO_VERSION}" \
+		--build-arg BASE_IMAGE="${BASE_IMAGE}" \
+		--build-arg INSTALL_NODE="${INSTALL_NODE}" \
+		--output "type=docker"
+endif
 
 .PHONY: tag
 tag:

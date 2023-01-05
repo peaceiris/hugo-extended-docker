@@ -54,6 +54,7 @@ else
 		--build-arg BASE_IMAGE="${BASE_IMAGE}" \
 		--build-arg INSTALL_NODE="${INSTALL_NODE}" \
 		--output "type=docker"
+endif
 
 .PHONY: tag
 tag:

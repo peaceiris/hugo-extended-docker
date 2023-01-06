@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v3
 
       # https://github.com/peaceiris/workflows/blob/main/setup-go/action.yml
-      - uses: peaceiris/workflows/setup-go@v0.17.2
+      - uses: peaceiris/workflows/setup-go@v0.18.1
         with:
           go-version-file: "deps/go.mod"
 

@@ -51,8 +51,6 @@ jobs:
       - name: make build-${{ matrix.type }} without cache
         run: make build-${{ matrix.type }}
         if: ${{ github.event_name != 'pull_request' }}
-        env:
-          DOCKER_ENABLE_CACHE: true
 
       - name: docker login
         if: github.event_name != 'pull_request'

@@ -9,26 +9,23 @@ ENV DOCKER_HUGO_CHECKSUM_URL="${DOCKER_HUGO_BASE_URL}/v${DOCKER_HUGO_VERSION}/hu
 ARG INSTALL_NODE="false"
 
 WORKDIR /build
-SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
-RUN apk add --update-cache --no-cache --virtual .build-deps wget && \
-    apk add --update-cache --no-cache \
-    git \
-    bash \
-    make \
-    jq \
-    ca-certificates \
-    libc6-compat \
-    libstdc++ && \
-    wget --quiet "${DOCKER_HUGO_URL}" && \
-    wget --quiet "${DOCKER_HUGO_CHECKSUM_URL}" && \
+SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl git make jq && \
+    curl -OL --silent "${DOCKER_HUGO_URL}" && \
+    curl -OL --silent "${DOCKER_HUGO_CHECKSUM_URL}" && \
     grep "${DOCKER_HUGO_NAME}.tar.gz" "./hugo_${DOCKER_HUGO_VERSION}_checksums.txt" | sha256sum -c - && \
     tar -zxvf "${DOCKER_HUGO_NAME}.tar.gz" && \
     mv ./hugo /usr/bin/hugo && \
     hugo version && \
-    apk del .build-deps && \
+    apt-get autoclean && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/* && \
     if [ "${INSTALL_NODE}" = "true" ]; then \
         echo "Installing Node.js and npm..." && \
-        apk add --no-cache nodejs npm && \
+        curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+        apt-get install -y --no-install-recommends nodejs && \
         npm i -g npm && \
         npm cache clean --force && \
         echo "node version: $(node -v)" && \

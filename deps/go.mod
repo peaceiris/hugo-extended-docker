@@ -1,6 +1,6 @@
 module hugo-extended-docker
 
-go 1.19
+go 1.20
 
 require github.com/gohugoio/hugo v0.111.2
 

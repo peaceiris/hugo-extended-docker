@@ -7,6 +7,9 @@ DOCKER_HUB_BASE_NAME := ${USERNAME}/${DOCKER_IMAGE_NAME}
 DOCKER_BASE_NAME := ghcr.io/${DOCKER_HUB_BASE_NAME}
 DOCKER_HUGO_VERSION := $(shell cd ./deps && go mod edit -json | jq -r '.Require[] | select(.Path == "github.com/gohugoio/hugo") | .Version | split("v") | .[1]')
 
+DOCKER_GOLANG_VERSION := 1.20
+DOCKER_DEBIAN_VERSION := bullseye
+
 TAG_SPEC := v${DOCKER_HUGO_VERSION}
 DOCKER_SCOPE := action-image-${GITHUB_REF_NAME}
 
@@ -64,7 +67,7 @@ build: build-slim build-mod build-full
 build-slim:
 	$(MAKE) build-tpl \
 		PKG_NAME="${PKG_SPEC}" \
-		BASE_IMAGE="alpine:3.16" \
+		BASE_IMAGE="debian:${DOCKER_DEBIAN_VERSION}-slim" \
 		INSTALL_NODE="false"
 	$(MAKE) tag \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}" \
@@ -75,7 +78,7 @@ build-slim:
 build-mod:
 	$(MAKE) build-tpl \
 		PKG_NAME="${PKG_SPEC}-mod" \
-		BASE_IMAGE="golang:1.19-alpine3.16" \
+		BASE_IMAGE="golang:${DOCKER_GOLANG_VERSION}-${DOCKER_DEBIAN_VERSION}" \
 		INSTALL_NODE="false"
 	$(MAKE) tag \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-mod" \
@@ -86,7 +89,7 @@ build-mod:
 build-full:
 	$(MAKE) build-tpl \
 		PKG_NAME="${PKG_SPEC}-full" \
-		BASE_IMAGE="golang:1.19-alpine3.16" \
+		BASE_IMAGE="golang:${DOCKER_GOLANG_VERSION}-${DOCKER_DEBIAN_VERSION}" \
 		INSTALL_NODE="true"
 	$(MAKE) tag \
 		TAG_SPEC="v${DOCKER_HUGO_VERSION}-full" \

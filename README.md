@@ -20,7 +20,9 @@ Docker images on GitHub Packages [ghcr.io/peaceiris/hugo] are also available.
 
 
 
-## Getting started
+## Getting Started
+
+### (1) Select Your Image
 
 | Image Name | Base Image | `docker images` | COMPRESSED SIZE | Notes |
 |---|---|---|---|---|
@@ -34,7 +36,7 @@ Docker images on GitHub Packages [ghcr.io/peaceiris/hugo] are also available.
 > - Hugo Modules: `hugo mod`
 > - Node.js: `node` and `npm`
 
-### (1) Docker Compose
+### (2) Create Your docker-compose.yml
 
 Create your `docker-compose.yml` like the following.
 
@@ -58,7 +60,7 @@ services:
       - --buildDrafts
 ```
 
-### (2) Usage
+### (3) Start Your Container
 
 ```sh
 # Run "hugo server"

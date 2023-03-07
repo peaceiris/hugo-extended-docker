@@ -22,18 +22,17 @@ Docker images on GitHub Packages [ghcr.io/peaceiris/hugo] are also available.
 
 ## Getting started
 
-| Image Name | Base Image | Image Size | Notes |
-|---|---|---|---|
-| `peaceiris/hugo:v0.x.x` | `debian:bullseye-slim` | 140MB | Minimum image |
-| `peaceiris/hugo:v0.x.x-mod` | `golang:1.20-bullseye` | 834MB | Hugo Modules feature is available |
-| `peaceiris/hugo:v0.x.x-full` | `golang:1.20-bullseye` | 1.04GB | Hugo Modules and Node.js are available |
+| Image Name | Base Image | `docker images` | COMPRESSED SIZE | Notes |
+|---|---|---|---|---|
+| `peaceiris/hugo:v0.x.x` | `debian:bullseye-slim` | 140MB | 72.64 MB | Slim image |
+| `peaceiris/hugo:v0.x.x-mod` | `golang:1.20-bullseye` | 834MB | 315.19 MB | Hugo Modules feature is available |
+| `peaceiris/hugo:v0.x.x-full` | `golang:1.20-bullseye` | 1.04GB | 378.96 MB | Hugo Modules and Node.js are available |
 
-`peaceiris/hugo = ghcr.io/peaceiris/hugo`
-
-The image size is a result of the `docker images` command.
-
-- Hugo Modules: `hugo mod`
-- Hugo Modules and Node.js: `hugo mod`, `node` and `npm`
+> **Note**
+>
+> - `peaceiris/hugo = ghcr.io/peaceiris/hugo`
+> - Hugo Modules: `hugo mod`
+> - Node.js: `node` and `npm`
 
 ### (1) Docker Compose
 

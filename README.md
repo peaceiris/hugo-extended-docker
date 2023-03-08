@@ -25,7 +25,7 @@ Docker images on GitHub Packages [ghcr.io/peaceiris/hugo] are also available.
 ### (1) Select Your Image
 
 | Image Name | Base Image | COMPRESSED SIZE | Notes |
-|---|---|---|---|
+|---|---|---:|---|
 | `peaceiris/hugo:v0.x.x` | `debian:bullseye-slim` | 72.64 MB | Slim image |
 | `peaceiris/hugo:v0.x.x-mod` | `golang:1.20-bullseye` | 315.19 MB | Hugo Modules feature is available |
 | `peaceiris/hugo:v0.x.x-full` | `golang:1.20-bullseye` | 378.96 MB | Hugo Modules and Node.js are available |

@@ -6,7 +6,7 @@
 
 
 
-## Alpine Base Docker Image for Hugo (Hugo extended and Hugo Modules)
+## Alpine and Debian Based Docker Image for Hugo (Hugo extended and Hugo Modules)
 
 - [peaceiris/hugo - Docker Hub]
 

@@ -144,6 +144,8 @@ github.com/gohugoio/hugo v0.119.0 h1:kQha6WHt5GcCbI2PELB5KjWMHFJ8LJLrh3lusxnmCng
 github.com/gohugoio/hugo v0.119.0/go.mod h1:pXwmL2lFumAkr3qS2D262seu4SWDLphQLvYfhdGdLRU=
 github.com/gohugoio/hugo v0.120.0 h1:3SEebLOWQ1aC3Uhb9P+gQqu2y3pyeRxjsVOPX6PwkT0=
 github.com/gohugoio/hugo v0.120.0/go.mod h1:k07nFh1ja+EQIy4MgUE7ukzPyia6wR8kuaVWQ2Zj08o=
+github.com/gohugoio/hugo v0.120.1 h1:QLdpSRLjMbT+cI39un3MXq84nuvMS5XT+v239TY5nkY=
+github.com/gohugoio/hugo v0.120.1/go.mod h1:uIHQIyDcqQY5cIdAYMgER+vPLdgQ3SV0s6K1Naj0lOM=
 github.com/gohugoio/locales v0.14.0 h1:Q0gpsZwfv7ATHMbcTNepFd59H7GoykzWJIxi113XGDc=
 github.com/gohugoio/locales v0.14.0/go.mod h1:ip8cCAv/cnmVLzzXtiTpPwgJ4xhKZranqNqtoIu0b/4=
 github.com/gohugoio/localescompressed v1.0.1 h1:KTYMi8fCWYLswFyJAeOtuk/EkXR/KPTHHNN9OS+RTxo=
@@ -289,6 +291,8 @@ github.com/tdewolff/parse/v2 v2.6.6 h1:Yld+0CrKUJaCV78DL1G2nk3C9lKrxyRTux5aaK/Ak
 github.com/tdewolff/parse/v2 v2.6.6/go.mod h1:woz0cgbLwFdtbjJu8PIKxhW05KplTFQkOdX78o+Jgrs=
 github.com/tdewolff/parse/v2 v2.7.0 h1:eVeKTV9nQ9BNS0LPlOgrhLXisiAjacaf60aRgSEtnic=
 github.com/tdewolff/parse/v2 v2.7.0/go.mod h1:9p2qMIHpjRSTr1qnFxQr+igogyTUTlwvf9awHSm84h8=
+github.com/tdewolff/parse/v2 v2.7.1 h1:gdImkv0sIupYr/cXAu5s+CxfVpxMdYZX2Qr+5Q+RdF8=
+github.com/tdewolff/parse/v2 v2.7.1/go.mod h1:9p2qMIHpjRSTr1qnFxQr+igogyTUTlwvf9awHSm84h8=
 github.com/tdewolff/test v1.0.7 h1:8Vs0142DmPFW/bQeHRP3MV19m1gvndjUb1sn8yy74LM=
 github.com/tdewolff/test v1.0.7/go.mod h1:6DAvZliBAAnD7rhVgwaM7DE5/d9NMOAJ09SqYqeK4QE=
 github.com/tdewolff/test v1.0.10/go.mod h1:6DAvZliBAAnD7rhVgwaM7DE5/d9NMOAJ09SqYqeK4QE=

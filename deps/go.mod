@@ -2,7 +2,7 @@ module hugo-extended-docker
 
 go 1.20
 
-require github.com/gohugoio/hugo v0.120.2
+require github.com/gohugoio/hugo v0.120.3
 
 require (
 	github.com/armon/go-radix v1.0.0 // indirect
@@ -29,7 +29,7 @@ require (
 	github.com/spf13/afero v1.10.0 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
-	github.com/tdewolff/parse/v2 v2.7.1 // indirect
+	github.com/tdewolff/parse/v2 v2.7.3 // indirect
 	golang.org/x/exp v0.0.0-20221031165847-c99f073a8326 // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect

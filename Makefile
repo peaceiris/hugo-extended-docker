@@ -8,7 +8,7 @@ DOCKER_BASE_NAME := ghcr.io/${DOCKER_HUB_BASE_NAME}
 DOCKER_HUGO_VERSION := $(shell cd ./deps && go mod edit -json | jq -r '.Require[] | select(.Path == "github.com/gohugoio/hugo") | .Version | split("v") | .[1]')
 
 DOCKER_GOLANG_VERSION := 1.20
-DOCKER_DEBIAN_VERSION := bullseye
+DOCKER_DEBIAN_VERSION := bookworm
 
 TAG_SPEC := v${DOCKER_HUGO_VERSION}
 DOCKER_SCOPE := action-image-${GITHUB_REF_NAME}

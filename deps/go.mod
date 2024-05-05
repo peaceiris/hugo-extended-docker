@@ -2,7 +2,7 @@ module hugo-extended-docker
 
 go 1.20
 
-require github.com/gohugoio/hugo v0.125.5
+require github.com/gohugoio/hugo v0.125.6
 
 require (
 	github.com/armon/go-radix v1.0.1-0.20221118154546-54df44f2176c // indirect
@@ -25,7 +25,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.1-0.20231216201459-8508981c8b6c // indirect
 	github.com/niklasfasching/go-org v1.7.0 // indirect
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58 // indirect
-	github.com/pelletier/go-toml/v2 v2.2.1 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect

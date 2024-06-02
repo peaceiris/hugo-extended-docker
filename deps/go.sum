@@ -214,6 +214,8 @@ github.com/gohugoio/hugo v0.126.1 h1:jzs1VX6Ru/NR0luf4Z9ahKLVmYzQEox4Cxd/kyzgN9A
 github.com/gohugoio/hugo v0.126.1/go.mod h1:wo66RnKrp9Mx0WeeF22LJxPY6YB+v2weKdZpHa8fI/A=
 github.com/gohugoio/hugo v0.126.2 h1:ZtC/eDL4jx+ZaJ0RjyKjI0DAQebc7HWp2gw82pVIPzc=
 github.com/gohugoio/hugo v0.126.2/go.mod h1:wo66RnKrp9Mx0WeeF22LJxPY6YB+v2weKdZpHa8fI/A=
+github.com/gohugoio/hugo v0.126.3 h1:53E3CY1dUgc93Lld/8R8f69GHceyHIuJAXpaskx5sBk=
+github.com/gohugoio/hugo v0.126.3/go.mod h1:wo66RnKrp9Mx0WeeF22LJxPY6YB+v2weKdZpHa8fI/A=
 github.com/gohugoio/locales v0.14.0 h1:Q0gpsZwfv7ATHMbcTNepFd59H7GoykzWJIxi113XGDc=
 github.com/gohugoio/locales v0.14.0/go.mod h1:ip8cCAv/cnmVLzzXtiTpPwgJ4xhKZranqNqtoIu0b/4=
 github.com/gohugoio/localescompressed v1.0.1 h1:KTYMi8fCWYLswFyJAeOtuk/EkXR/KPTHHNN9OS+RTxo=

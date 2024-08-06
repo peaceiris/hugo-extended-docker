@@ -2,7 +2,7 @@ module hugo-extended-docker
 
 go 1.21.8
 
-toolchain go1.22.5
+toolchain go1.22.6
 
 require github.com/gohugoio/hugo v0.131.0
 

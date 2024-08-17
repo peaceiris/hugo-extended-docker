@@ -244,6 +244,8 @@ github.com/gohugoio/hugo v0.132.1 h1:PD5MkjHThldugbNhP1t5PbfLU5yyr6QdAYJ48kB2xj4
 github.com/gohugoio/hugo v0.132.1/go.mod h1:wp/XU6OGHuaVx3CDmgzmbVBC7g61CeWUt9zi4gjVdBY=
 github.com/gohugoio/hugo v0.132.2 h1:sd8IxLiFl0ydK1eEMBRh+M1dBV80lw0kz+Nir+Ao5AQ=
 github.com/gohugoio/hugo v0.132.2/go.mod h1:wp/XU6OGHuaVx3CDmgzmbVBC7g61CeWUt9zi4gjVdBY=
+github.com/gohugoio/hugo v0.133.0 h1:1xjHfWI3EkJT77vZbRpqVlBtU3SPKsYdUfYZiipAuSM=
+github.com/gohugoio/hugo v0.133.0/go.mod h1:3RW3N2f3lqkpjIWKoKYeyKgIe+z6UdU5uVCJpYJH08k=
 github.com/gohugoio/locales v0.14.0 h1:Q0gpsZwfv7ATHMbcTNepFd59H7GoykzWJIxi113XGDc=
 github.com/gohugoio/locales v0.14.0/go.mod h1:ip8cCAv/cnmVLzzXtiTpPwgJ4xhKZranqNqtoIu0b/4=
 github.com/gohugoio/localescompressed v1.0.1 h1:KTYMi8fCWYLswFyJAeOtuk/EkXR/KPTHHNN9OS+RTxo=
@@ -629,6 +631,8 @@ golang.org/x/sys v0.22.0 h1:RI27ohtqKCnwULzJLqkv897zojh5/DwS/ENaMzUOaWI=
 golang.org/x/sys v0.22.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
 golang.org/x/sys v0.23.0 h1:YfKFowiIMvtgl1UERQoTPPToxltDeZfbj4H7dVUCwmM=
 golang.org/x/sys v0.23.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+golang.org/x/sys v0.24.0 h1:Twjiwq9dn6R1fQcyiK+wQyHWfaz/BJB+YIpzU/Cv3Xg=
+golang.org/x/sys v0.24.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
 golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=

@@ -58,6 +58,8 @@ github.com/bep/golibsass v1.1.0 h1:pjtXr00IJZZaOdfryNa9wARTB3Q0BmxC3/V1KNcgyTw=
 github.com/bep/golibsass v1.1.0/go.mod h1:DL87K8Un/+pWUS75ggYv41bliGiolxzDKWJAq3eJ1MA=
 github.com/bep/golibsass v1.1.1 h1:xkaet75ygImMYjM+FnHIT3xJn7H0xBA9UxSOJjk8Khw=
 github.com/bep/golibsass v1.1.1/go.mod h1:DL87K8Un/+pWUS75ggYv41bliGiolxzDKWJAq3eJ1MA=
+github.com/bep/golibsass v1.2.0 h1:nyZUkKP/0psr8nT6GR2cnmt99xS93Ji82ZD9AgOK6VI=
+github.com/bep/golibsass v1.2.0/go.mod h1:DL87K8Un/+pWUS75ggYv41bliGiolxzDKWJAq3eJ1MA=
 github.com/bep/logg v0.2.0 h1:EWKB04ea/K/V0xd/7O6x5q+1l+Grub+9N48YMcevtF4=
 github.com/bep/logg v0.2.0/go.mod h1:Ccp9yP3wbR1mm++Kpxet91hAZBEQgmWgFgnXX3GkIV0=
 github.com/bep/logg v0.3.0 h1:aJWnnkTv9kUAM/2poviaEl5eAdqY0gAnQ9X3bMYZ2xw=
@@ -248,6 +250,8 @@ github.com/gohugoio/hugo v0.133.0 h1:1xjHfWI3EkJT77vZbRpqVlBtU3SPKsYdUfYZiipAuSM
 github.com/gohugoio/hugo v0.133.0/go.mod h1:3RW3N2f3lqkpjIWKoKYeyKgIe+z6UdU5uVCJpYJH08k=
 github.com/gohugoio/hugo v0.133.1 h1:b9mDQu3HjKWJTSTGFQO1zL0IaOG7tiBfdHVValq1Z0Q=
 github.com/gohugoio/hugo v0.133.1/go.mod h1:WcKqZK0xjiEbhr20RGFmWAFnCxNCYEE4XhFa+pv6IMA=
+github.com/gohugoio/hugo v0.134.0 h1:xzVzOnoETimqjPdPBZJmyHwaF+SzXiXZ49IRTuH/yGU=
+github.com/gohugoio/hugo v0.134.0/go.mod h1:/1gnGxlWfAzQarxcQ+tMvKw4e/IMBwy0DFbRxORwOtY=
 github.com/gohugoio/locales v0.14.0 h1:Q0gpsZwfv7ATHMbcTNepFd59H7GoykzWJIxi113XGDc=
 github.com/gohugoio/locales v0.14.0/go.mod h1:ip8cCAv/cnmVLzzXtiTpPwgJ4xhKZranqNqtoIu0b/4=
 github.com/gohugoio/localescompressed v1.0.1 h1:KTYMi8fCWYLswFyJAeOtuk/EkXR/KPTHHNN9OS+RTxo=
@@ -363,6 +367,8 @@ github.com/pelletier/go-toml/v2 v2.2.1 h1:9TA9+T8+8CUCO2+WYnDLCgrYi9+omqKXyjDtos
 github.com/pelletier/go-toml/v2 v2.2.1/go.mod h1:1t835xjRzz80PqgE6HHgN2JOsmgYu/h4qDAS4n929Rs=
 github.com/pelletier/go-toml/v2 v2.2.2 h1:aYUidT7k73Pcl9nb2gScu7NSrKCSHIDE89b3+6Wq+LM=
 github.com/pelletier/go-toml/v2 v2.2.2/go.mod h1:1t835xjRzz80PqgE6HHgN2JOsmgYu/h4qDAS4n929Rs=
+github.com/pelletier/go-toml/v2 v2.2.3 h1:YmeHyLY8mFWbdkNWwpr+qIL2bEqT0o95WSdkNHvL12M=
+github.com/pelletier/go-toml/v2 v2.2.3/go.mod h1:MfCQTFTvCcUyyvvwm1+G6H/jORL20Xlb6rzQu9GuUkc=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/sftp v1.13.1/go.mod h1:3HaPG6Dq1ILlpPZRO0HVMrsydcdLt6HRDccSgb87qRg=

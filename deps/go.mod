@@ -4,14 +4,14 @@ go 1.22.6
 
 toolchain go1.23.2
 
-require github.com/gohugoio/hugo v0.136.5
+require github.com/gohugoio/hugo v0.137.0
 
 require (
 	github.com/armon/go-radix v1.0.1-0.20221118154546-54df44f2176c // indirect
 	github.com/bep/clock v0.3.0 // indirect
 	github.com/bep/clocks v0.5.0 // indirect
 	github.com/bep/godartsass v1.2.0 // indirect
-	github.com/bep/godartsass/v2 v2.1.0 // indirect
+	github.com/bep/godartsass/v2 v2.2.0 // indirect
 	github.com/bep/golibsass v1.2.0 // indirect
 	github.com/bep/logg v0.4.0 // indirect
 	github.com/bep/overlayfs v0.9.2 // indirect

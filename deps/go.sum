@@ -58,6 +58,8 @@ github.com/bep/godartsass/v2 v2.2.0 h1:3hO9Dt4BOnxkKmRxc+OpoKVFrDvBycpSCXEdElVAM
 github.com/bep/godartsass/v2 v2.2.0/go.mod h1:AcP8QgC+OwOXEq6im0WgDRYK7scDsmZCEW62o1prQLo=
 github.com/bep/godartsass/v2 v2.3.0 h1:gEMyq/bNn4hxpUSwy/NKyOTqPqVh3AedhMHvQR+x0kU=
 github.com/bep/godartsass/v2 v2.3.0/go.mod h1:AcP8QgC+OwOXEq6im0WgDRYK7scDsmZCEW62o1prQLo=
+github.com/bep/godartsass/v2 v2.3.1 h1:Lh9v0IxAaB+toyZrZ+XYNYcGXI1PzGzvZ4u8tRWTnLw=
+github.com/bep/godartsass/v2 v2.3.1/go.mod h1:AcP8QgC+OwOXEq6im0WgDRYK7scDsmZCEW62o1prQLo=
 github.com/bep/golibsass v1.1.0 h1:pjtXr00IJZZaOdfryNa9wARTB3Q0BmxC3/V1KNcgyTw=
 github.com/bep/golibsass v1.1.0/go.mod h1:DL87K8Un/+pWUS75ggYv41bliGiolxzDKWJAq3eJ1MA=
 github.com/bep/golibsass v1.1.1 h1:xkaet75ygImMYjM+FnHIT3xJn7H0xBA9UxSOJjk8Khw=
@@ -290,6 +292,8 @@ github.com/gohugoio/hugo v0.139.1 h1:D4iiPvWVOdGpQ+j5yU0Mml7KIpcAGHCjkrqZ6R3s0IY
 github.com/gohugoio/hugo v0.139.1/go.mod h1:8Q8n1a6fjSySX2fNt8pT/TaAH5/uMxjbwMsTBhOwFZU=
 github.com/gohugoio/hugo v0.139.2 h1:9m4O4oMz5MO9SeY8KBFcWb2no3DZ9WU2HHAlV82OtXs=
 github.com/gohugoio/hugo v0.139.2/go.mod h1:8Q8n1a6fjSySX2fNt8pT/TaAH5/uMxjbwMsTBhOwFZU=
+github.com/gohugoio/hugo v0.139.3 h1:VS0yMBWjMR+T19nWLX+0gPe5Rp8ebwxoTDSuceyVp3g=
+github.com/gohugoio/hugo v0.139.3/go.mod h1:lQAqvw6Nlaq8HyTLky5cV3P0XZq0oSQl0tcFORfM1zk=
 github.com/gohugoio/locales v0.14.0 h1:Q0gpsZwfv7ATHMbcTNepFd59H7GoykzWJIxi113XGDc=
 github.com/gohugoio/locales v0.14.0/go.mod h1:ip8cCAv/cnmVLzzXtiTpPwgJ4xhKZranqNqtoIu0b/4=
 github.com/gohugoio/localescompressed v1.0.1 h1:KTYMi8fCWYLswFyJAeOtuk/EkXR/KPTHHNN9OS+RTxo=

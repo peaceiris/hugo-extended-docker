@@ -4,7 +4,7 @@ go 1.22.6
 
 toolchain go1.23.4
 
-require github.com/gohugoio/hugo v0.140.0
+require github.com/gohugoio/hugo v0.140.1
 
 require (
 	github.com/armon/go-radix v1.0.1-0.20221118154546-54df44f2176c // indirect
@@ -32,7 +32,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
-	github.com/spf13/cast v1.7.0 // indirect
+	github.com/spf13/cast v1.7.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/tdewolff/parse/v2 v2.7.18 // indirect
 	golang.org/x/exp v0.0.0-20221031165847-c99f073a8326 // indirect

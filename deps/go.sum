@@ -298,6 +298,8 @@ github.com/gohugoio/hugo v0.139.3 h1:VS0yMBWjMR+T19nWLX+0gPe5Rp8ebwxoTDSuceyVp3g
 github.com/gohugoio/hugo v0.139.3/go.mod h1:lQAqvw6Nlaq8HyTLky5cV3P0XZq0oSQl0tcFORfM1zk=
 github.com/gohugoio/hugo v0.140.0 h1:7II6bh74iLaHLoLCnOBEOBw22uxOVgu3utLkJpygtCs=
 github.com/gohugoio/hugo v0.140.0/go.mod h1:M+XLsl7uWFwiiTRT0AeY7jO488g07RFAw6fomi733DU=
+github.com/gohugoio/hugo v0.140.1 h1:mW0yegzMi4bjeetwj73epSjYy1zFFO7WTUyr71zTLgs=
+github.com/gohugoio/hugo v0.140.1/go.mod h1:75ZJaPCFvXX85Kc06INVWS9nCy/nazEhCVbvXDK143c=
 github.com/gohugoio/locales v0.14.0 h1:Q0gpsZwfv7ATHMbcTNepFd59H7GoykzWJIxi113XGDc=
 github.com/gohugoio/locales v0.14.0/go.mod h1:ip8cCAv/cnmVLzzXtiTpPwgJ4xhKZranqNqtoIu0b/4=
 github.com/gohugoio/localescompressed v1.0.1 h1:KTYMi8fCWYLswFyJAeOtuk/EkXR/KPTHHNN9OS+RTxo=
@@ -440,6 +442,8 @@ github.com/spf13/cast v1.6.0 h1:GEiTHELF+vaR5dhz3VqZfFSzZjYbgeKDpBxQVS4GYJ0=
 github.com/spf13/cast v1.6.0/go.mod h1:ancEpBxwJDODSW/UG4rDrAqiKolqNNh2DX3mk86cAdo=
 github.com/spf13/cast v1.7.0 h1:ntdiHjuueXFgm5nzDRdOS4yfT43P5Fnud6DH50rz/7w=
 github.com/spf13/cast v1.7.0/go.mod h1:ancEpBxwJDODSW/UG4rDrAqiKolqNNh2DX3mk86cAdo=
+github.com/spf13/cast v1.7.1 h1:cuNEagBQEHWN1FnbGEjCXL2szYEXqfJPbP2HNUaca9Y=
+github.com/spf13/cast v1.7.1/go.mod h1:ancEpBxwJDODSW/UG4rDrAqiKolqNNh2DX3mk86cAdo=
 github.com/spf13/jwalterweatherman v1.1.0 h1:ue6voC5bR5F8YxI5S67j9i582FU4Qvo2bmqnqMYADFk=
 github.com/spf13/jwalterweatherman v1.1.0/go.mod h1:aNWZUN0dPAAO/Ljvb5BEdw96iTZ0EXowPYD95IqWIGo=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

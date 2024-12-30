@@ -300,6 +300,8 @@ github.com/gohugoio/hugo v0.140.0 h1:7II6bh74iLaHLoLCnOBEOBw22uxOVgu3utLkJpygtCs
 github.com/gohugoio/hugo v0.140.0/go.mod h1:M+XLsl7uWFwiiTRT0AeY7jO488g07RFAw6fomi733DU=
 github.com/gohugoio/hugo v0.140.1 h1:mW0yegzMi4bjeetwj73epSjYy1zFFO7WTUyr71zTLgs=
 github.com/gohugoio/hugo v0.140.1/go.mod h1:75ZJaPCFvXX85Kc06INVWS9nCy/nazEhCVbvXDK143c=
+github.com/gohugoio/hugo v0.140.2 h1:2dA/1Yxx3/1DmVq00NAp3CBLoriIxaPk2Vh0HPtl6Lo=
+github.com/gohugoio/hugo v0.140.2/go.mod h1:wKQKmZ0pRx4I4iv+SEqzcuCH3FTf2rwzYfDd9ZZiN5o=
 github.com/gohugoio/locales v0.14.0 h1:Q0gpsZwfv7ATHMbcTNepFd59H7GoykzWJIxi113XGDc=
 github.com/gohugoio/locales v0.14.0/go.mod h1:ip8cCAv/cnmVLzzXtiTpPwgJ4xhKZranqNqtoIu0b/4=
 github.com/gohugoio/localescompressed v1.0.1 h1:KTYMi8fCWYLswFyJAeOtuk/EkXR/KPTHHNN9OS+RTxo=
@@ -611,6 +613,8 @@ golang.org/x/net v0.31.0 h1:68CPQngjLL0r2AlUKiSxtQFKvzRVbnzLwMUn5SzcLHo=
 golang.org/x/net v0.31.0/go.mod h1:P4fl1q7dY2hnZFxEk4pPSkDHF+QqjitcnDjUQyMM+pM=
 golang.org/x/net v0.32.0 h1:ZqPmj8Kzc+Y6e0+skZsuACbx+wzMgo5MQsJh9Qd6aYI=
 golang.org/x/net v0.32.0/go.mod h1:CwU0IoeOlnQQWJ6ioyFrfRuomB8GKF6KbYXZVyeXNfs=
+golang.org/x/net v0.33.0 h1:74SYHlV8BIgHIFC/LrYkOGIwL19eTYXQ5wc6TBuO36I=
+golang.org/x/net v0.33.0/go.mod h1:HXLR5J+9DxmrqMwG9qjGCxZ+zKXxBru04zlTvWlWuN4=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
 golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
 golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=

@@ -4,7 +4,7 @@ go 1.22.6
 
 toolchain go1.23.5
 
-require github.com/gohugoio/hugo v0.141.0
+require github.com/gohugoio/hugo v0.142.0
 
 require (
 	github.com/armon/go-radix v1.0.1-0.20221118154546-54df44f2176c // indirect

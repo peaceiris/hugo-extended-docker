@@ -4,6 +4,14 @@
 
 <img width="400" alt="Docker image of Hugo extended version" src="https://raw.githubusercontent.com/peaceiris/hugo-extended-docker/main/images/ogp.svg">
 
+## Project Archived
+
+The official Hugo Docker image is now available, so this repository and its Docker images have completed their role.
+Thank you for using this project.
+
+- [Package hugo](https://github.com/gohugoio/hugo/pkgs/container/hugo)
+- [Release v0.135.0 - gohugoio/hugo](https://github.com/gohugoio/hugo/releases/tag/v0.135.0)
+
 
 
 ## Debian Based Docker Image for Hugo (Hugo extended and Hugo Modules)

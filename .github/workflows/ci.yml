@@ -15,12 +15,44 @@ on:
 
 jobs:
   hadolint:
-    uses: peaceiris/workflows/.github/workflows/hadolint.yml@main
+    permissions:
+      contents: read
+    uses: peaceiris/workflows/.github/workflows/hadolint.yml@abcd9011b4dcbb803ab9454459030da9b9f0b2ab # main
 
-  main:
+  build:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
     permissions:
       actions: write
+      contents: read
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        type:
+          - "slim"
+          - "mod"
+          - "full"
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      # https://github.com/peaceiris/workflows/blob/main/setup-go/action.yml
+      - uses: peaceiris/workflows/setup-go@35a86f1c73dbd1df15879eb7c8fb292f3f616a1f # v0.21.1
+        with:
+          go-version-file: "deps/go.mod"
+
+      - uses: peaceiris/actions-export-envs@fd73ae074de09b2043f696b181a74bb35b51bfa9 # v1.1.0
+        id: envs
+
+      - name: make build-${{ matrix.type }} with cache
+        run: make build-${{ matrix.type }}
+        env:
+          ACTIONS_RUNTIME_TOKEN: ${{ steps.envs.outputs.ACTIONS_RUNTIME_TOKEN }}
+          ACTIONS_CACHE_URL: ${{ steps.envs.outputs.ACTIONS_CACHE_URL }}
+
+  publish:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
       contents: read
       packages: write
     timeout-minutes: 5
@@ -31,29 +63,17 @@ jobs:
           - "mod"
           - "full"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       # https://github.com/peaceiris/workflows/blob/main/setup-go/action.yml
-      - uses: peaceiris/workflows/setup-go@v0.21.1
+      - uses: peaceiris/workflows/setup-go@35a86f1c73dbd1df15879eb7c8fb292f3f616a1f # v0.21.1
         with:
           go-version-file: "deps/go.mod"
 
-      - uses: peaceiris/actions-export-envs@v1.1.0
-        id: envs
-
-      - name: make build-${{ matrix.type }} with cache
-        run: make build-${{ matrix.type }}
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          ACTIONS_RUNTIME_TOKEN: ${{ steps.envs.outputs.ACTIONS_RUNTIME_TOKEN }}
-          ACTIONS_CACHE_URL: ${{ steps.envs.outputs.ACTIONS_CACHE_URL }}
-
       - name: make build-${{ matrix.type }} without cache
         run: make build-${{ matrix.type }}
-        if: ${{ github.event_name != 'pull_request' }}
 
       - name: docker login
-        if: github.event_name != 'pull_request'
         env:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,4 +82,3 @@ jobs:
           make login-ghcr
 
       - run: make push-${{ matrix.type }}
-        if: github.event_name != 'pull_request'
